@@ -1,0 +1,130 @@
+# CodeRabbit Configuration
+# Claude Code学習用リポジトリ - AI支援開発とSpec駆動開発の実践
+
+# レビュー言語設定
+language: ja
+
+# レビュー設定
+reviews:
+  # 自動レビューを有効化
+  auto_review:
+    enabled: true
+    # ドラフトPRでもレビュー実施
+    drafts: true
+
+  # レビューの詳細度
+  profile: chill
+
+  # リクエスト変更の閾値（高い値 = より寛容）
+  request_changes_workflow: false
+
+  # 高レベルの要約を含める
+  high_level_summary: true
+
+  # 各ファイルの要約を含める
+  poem: true
+
+  # レビュー範囲の設定
+  review_status: true
+
+  # コード提案の形式
+  collapse_walkthrough: false
+
+  # セキュリティに関する問題を優先
+  path_filters:
+    - "**/*.js"
+    - "**/*.md"
+    - "**/*.yaml"
+    - "**/*.yml"
+    - "**/*.json"
+    - ".kiro/**/*"
+    - ".claude/**/*"
+
+  # 特定のディレクトリ・ファイルを除外
+  path_ignore:
+    - "node_modules/**"
+    - "**/*.log"
+    - ".git/**"
+    - "sample-*/**/data/*.json"
+
+# チャット機能の設定
+chat:
+  # AI とのチャット機能を有効化
+  auto_reply: true
+
+# プロジェクト固有の知識ベース
+knowledge_base:
+  # プロジェクトの技術スタック
+  - "このプロジェクトはClaude Code学習用のサンプルリポジトリです"
+  - "Kiro風Spec駆動開発（cc-sdd）を採用しています"
+  - "htmx + Express.jsによるサーバーサイドレンダリングアプローチを使用"
+  - "セキュリティ: XSS対策としてHTMLエスケープを必須とします"
+  - ".kiro/steering/ にはプロジェクト全体のコンテキストが格納されています"
+  - ".kiro/specs/ には機能仕様が格納されています"
+  - "sample-*/ ディレクトリは自己完結したサンプルアプリケーションです"
+  - "htmxはCDN経由で使用し、JavaScript最小限のアプローチを取ります"
+
+  # レビュー時の重点ポイント
+  - "セキュリティ: XSS、インジェクション攻撃への対策を確認"
+  - "Spec駆動開発: requirements.md、design.md、tasks.mdとの整合性を確認"
+  - "コード品質: シンプルさと学習用途への適合性を重視"
+  - "ドキュメント: 日本語での明確な説明を確認"
+  - "htmxパターン: ハイパーメディア駆動アプローチの適切な使用を確認"
+
+# レビュー時の追加チェック項目
+tools:
+  # セキュリティスキャン
+  security:
+    enabled: true
+    # XSS、SQLインジェクション、コマンドインジェクションをチェック
+    vulnerability_detection: true
+
+  # パフォーマンス分析
+  performance:
+    enabled: true
+
+  # ベストプラクティスチェック
+  best_practices:
+    enabled: true
+
+# 早期レビュー（small PRでも詳細レビュー）
+early_access: true
+
+# カスタムルール
+rules:
+  # JavaScript/Node.js関連
+  - id: nodejs-security
+    pattern: "eval\\(|new Function\\(|setTimeout\\(.*\\)|setInterval\\(.*\\)"
+    message: "eval()や動的コード実行は避けてください。セキュリティリスクがあります。"
+    severity: error
+
+  - id: xss-prevention
+    pattern: "innerHTML|outerHTML"
+    message: "innerHTML/outerHTMLの使用は慎重に。XSS対策としてtextContentやエスケープ処理を検討してください。"
+    severity: warning
+
+  - id: console-log
+    pattern: "console\\.log\\("
+    message: "デバッグ用のconsole.log()が残っています。本番環境では削除を検討してください。"
+    severity: info
+
+  # Spec駆動開発関連
+  - id: spec-alignment
+    pattern: "\\.kiro/specs/.*/tasks\\.md"
+    message: "タスクの実装状況を確認してください。requirements.mdとdesign.mdとの整合性を確認しましょう。"
+    severity: info
+
+  # ドキュメント品質
+  - id: documentation-completeness
+    pattern: "TODO|FIXME|XXX|HACK"
+    message: "TODO/FIXMEコメントがあります。対応予定や課題として追跡しましょう。"
+    severity: info
+
+# レビュー対象外のファイルパターン
+exclude:
+  - "**/*.min.js"
+  - "**/*.bundle.js"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/.DS_Store"
+  - "**/Thumbs.db"
