@@ -1,0 +1,13 @@
+{
+  "name": "sample-htmx-todo-app",
+  "version": "1.0.0",
+  "description": "A simple Todo app built with htmx",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,447 @@
+/* ===========================================
+   Apple-Inspired Todo UI
+   Quiet Elegance Design System
+   =========================================== */
+
+/* カスタムプロパティ - ダークブルーテーマ */
+:root {
+  /* カラーパレット - Dark Blue Base */
+  --background: #0a1628;
+  --surface: #132039;
+  --surface-elevated: #1a2d4d;
+  --border: #2a4066;
+  --text-primary: #f0f4f8;
+  --text-secondary: #8ba3c7;
+  --accent: #4da6ff;
+  --accent-soft: rgba(77, 166, 255, 0.15);
+  --success: #4ade80;
+  --danger: #f87171;
+  --input-bg: #0d1c30;
+
+  /* シャドウ - ダークブルー用 */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 4px rgba(77, 166, 255, 0.25);
+  --shadow-glow: 0 0 20px rgba(77, 166, 255, 0.15);
+
+  /* トランジション */
+  --transition-standard: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  --transition-fast: 0.15s ease;
+}
+
+/* リセットと基本スタイル */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Helvetica Neue", sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 32px 20px;
+  transition: background-color var(--transition-standard), color var(--transition-standard);
+}
+
+/* コンテナ */
+.container {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* ヘッダー */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 48px 0 0;
+}
+
+.header h1 {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  color: var(--text-secondary);
+  text-transform: none;
+}
+
+/* タスク追加フォーム */
+.add-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-standard), border-color var(--transition-standard);
+}
+
+.add-form:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-hover), var(--shadow-glow);
+}
+
+.todo-input {
+  flex: 1;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 17px;
+  color: var(--text-primary);
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  will-change: border-color, box-shadow;
+}
+
+.todo-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.todo-input:focus {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-focus);
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 24px;
+  font-family: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--accent);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  will-change: opacity, transform;
+}
+
+.add-btn:hover {
+  opacity: 0.85;
+}
+
+.add-btn:active {
+  transform: scale(0.98);
+}
+
+.add-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* タスクリスト */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* タスクアイテム */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-standard), transform var(--transition-standard), border-color var(--transition-standard);
+  animation: slideIn 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  will-change: box-shadow, transform;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.todo-item:hover {
+  border-color: rgba(77, 166, 255, 0.3);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 完了状態 */
+.todo-item.completed {
+  opacity: 0.6;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+/* カスタムチェックボックス */
+.todo-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: var(--input-bg);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  flex-shrink: 0;
+  position: relative;
+  will-change: border-color, background-color;
+}
+
+.todo-checkbox:hover {
+  border-color: var(--accent);
+}
+
+.todo-checkbox:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.todo-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+/* タスクテキスト */
+.todo-text {
+  flex: 1;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* 削除ボタン */
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+  will-change: background-color, color;
+}
+
+.delete-btn:hover {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--danger);
+}
+
+.delete-btn:active {
+  transform: scale(0.95);
+}
+
+.delete-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* スケルトンUI（ローディング状態） */
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.skeleton-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.skeleton-text {
+  flex: 1;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--border);
+}
+
+/* 空メッセージ */
+.empty-message {
+  text-align: center;
+  padding: 64px 32px;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 15px;
+  box-shadow: var(--shadow-card);
+}
+
+/* エラーメッセージ */
+.error-message {
+  text-align: center;
+  padding: 16px;
+  color: var(--danger);
+  background: var(--surface);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: var(--shadow-card);
+}
+
+/* htmxリクエスト中 */
+.htmx-request {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.htmx-request .add-btn {
+  background: var(--text-secondary);
+}
+
+/* フッター */
+.footer {
+  text-align: center;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(42, 64, 102, 0.5);
+  color: var(--text-secondary);
+  font-size: 12px;
+  letter-spacing: 0.1px;
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.footer a:hover {
+  opacity: 0.7;
+}
+
+/* フェードアウトアニメーション（削除時） */
+.fade-out {
+  animation: fadeOut 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0) forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 600px) {
+  body {
+    padding: 24px 16px;
+  }
+
+  .header {
+    padding: 32px 0 0;
+    margin-bottom: 24px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .add-form {
+    padding: 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .add-btn {
+    width: 100%;
+    padding: 12px 24px;
+  }
+
+  .todo-item {
+    padding: 12px 16px;
+  }
+
+  .footer {
+    margin-top: 48px;
+  }
+}
+
+/* アクセシビリティ: プリファードモーション削減 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* パフォーマンス最適化: GPUアクセラレーション */
+.todo-item,
+.add-btn,
+.delete-btn,
+.todo-checkbox {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

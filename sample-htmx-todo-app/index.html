@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>Todo</title>
+
+  <!-- htmx CDNから読み込み -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+  <!-- スタイルシート -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダー部分 -->
+    <header class="header">
+      <h1>Todo</h1>
+      <p class="subtitle">Simple task management</p>
+    </header>
+
+    <!-- タスク追加フォーム -->
+    <form
+      class="add-form"
+      hx-post="http://localhost:3000/api/todos"
+      hx-target="#todo-list"
+      hx-swap="beforeend"
+      hx-on::after-request="if(event.detail.successful) { this.reset(); document.querySelector('.empty-message')?.remove(); }"
+    >
+      <input
+        type="text"
+        name="text"
+        class="todo-input"
+        placeholder="New task"
+        required
+        autocomplete="off"
+      />
+      <button type="submit" class="add-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+    </form>
+
+    <!-- タスクリスト -->
+    <ul
+      id="todo-list"
+      class="todo-list"
+      hx-get="http://localhost:3000/api/todos"
+      hx-trigger="load"
+      hx-swap="innerHTML"
+    >
+      <!-- ページ読み込み時にスケルトンUI表示 -->
+      <li class="skeleton-item">
+        <div class="skeleton-checkbox"></div>
+        <div class="skeleton-text"></div>
+      </li>
+      <li class="skeleton-item">
+        <div class="skeleton-checkbox"></div>
+        <div class="skeleton-text"></div>
+      </li>
+      <li class="skeleton-item">
+        <div class="skeleton-checkbox"></div>
+        <div class="skeleton-text"></div>
+      </li>
+    </ul>
+
+    <!-- フッター -->
+    <footer class="footer">
+      Powered by <a href="https://htmx.org" target="_blank" rel="noopener">htmx</a>
+    </footer>
+  </div>
+</body>
+</html>
