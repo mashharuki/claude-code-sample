@@ -1,4 +1,8 @@
 {
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "OTEL_METRICS_EXPORTER": "otlp"
+  },
   "permissions": {
     "allow": [
       "Bash(npm run lint)",
@@ -13,8 +17,7 @@
       "Read(./secrets/**)"
     ]
   },
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "OTEL_METRICS_EXPORTER": "otlp"
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true
   }
 }
