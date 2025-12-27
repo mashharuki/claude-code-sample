@@ -5,6 +5,7 @@
   },
   "permissions": {
     "allow": [
+      "Bash(rm -rf:*)",
       "Bash(npm run lint)",
       "Bash(npm run build)",
       "Bash(npm run test:*)",
