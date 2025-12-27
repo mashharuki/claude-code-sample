@@ -19,5 +19,9 @@
   },
   "enabledPlugins": {
     "example-skills@anthropic-agent-skills": true
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bun x ccusage statusline"
   }
 }
