@@ -27,6 +27,14 @@ npx cc-sdd@latest --lang ja
 
 `.claude/commands/kiro`配下にKiroと同様の振る舞いをするためのスラッシュコマンド一式が作成される
 
+## Vercel React Best PracticeのSKILL導入方法
+
+このコマンドを実行するだけで Claude Code、Codex、GitHub Copilot用のSKILLが追加される
+
+```bash
+npx add-skill vercel-labs/agent-skills
+```
+
 ## 参考文献
 - [Claude Code 公式ドキュメント](https://code.claude.com/docs/ja/quickstart)
 - [Zenn Claude Code 完全ガイド](https://zenn.dev/heku/books/claude-code-guide)
