@@ -1,0 +1,81 @@
+{
+  "skill_name": "aws-news-collector",
+  "iteration": 1,
+  "timestamp": "2026-03-11T19:30:00+09:00",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "evals": [
+        {
+          "eval_name": "weekly-summary",
+          "status": "failed",
+          "note": "Usage quota exhausted during execution"
+        },
+        {
+          "eval_name": "focused-bedrock",
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "tokens": 36308,
+          "duration_seconds": 177.2
+        },
+        {
+          "eval_name": "blog-ideas",
+          "pass_rate": 1.0,
+          "passed": 6,
+          "total": 6,
+          "tokens": 35873,
+          "duration_seconds": 166.8
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 1.0,
+        "total_passed": 11,
+        "total_assertions": 11,
+        "mean_tokens": 36090,
+        "mean_duration_seconds": 172.0
+      }
+    },
+    {
+      "name": "without_skill",
+      "evals": [
+        {
+          "eval_name": "weekly-summary",
+          "pass_rate": 0.75,
+          "passed": 6,
+          "total": 8,
+          "tokens": 23367,
+          "duration_seconds": 100.9
+        },
+        {
+          "eval_name": "focused-bedrock",
+          "pass_rate": 0.8,
+          "passed": 4,
+          "total": 5,
+          "tokens": 24429,
+          "duration_seconds": 110.2
+        },
+        {
+          "eval_name": "blog-ideas",
+          "pass_rate": 0.5,
+          "passed": 3,
+          "total": 6,
+          "tokens": 22533,
+          "duration_seconds": 120.9
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.68,
+        "total_passed": 13,
+        "total_assertions": 19,
+        "mean_tokens": 23443,
+        "mean_duration_seconds": 110.7
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate_improvement": "+32pp (0.68 → 1.00)",
+    "token_overhead": "+54% (23,443 → 36,090)",
+    "duration_overhead": "+55% (110.7s → 172.0s)"
+  }
+}

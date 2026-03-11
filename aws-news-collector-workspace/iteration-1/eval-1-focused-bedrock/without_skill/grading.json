@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "config": "without_skill",
+  "expectations": [
+    {"text": "bedrock_highlighted", "passed": true, "evidence": "Bedrock関連3件が主要アップデートとして詳細に記述されている"},
+    {"text": "three_day_scope", "passed": true, "evidence": "「2026年3月9日〜11日」と明記"},
+    {"text": "has_bedrock_blog_ideas", "passed": true, "evidence": "3つのブログネタ提案あり。各ネタに切り口・ポイント・想定読者・注目度が含まれる"},
+    {"text": "has_working_links", "passed": true, "evidence": "Sources セクションに8つのリンクあり"},
+    {"text": "non_bedrock_also_shown", "passed": false, "evidence": "Bedrock関連のみに絞られており、他カテゴリ（セキュリティ、コンテナ等）の記事は含まれていない"}
+  ]
+}

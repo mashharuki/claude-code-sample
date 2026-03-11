@@ -1,0 +1,14 @@
+{
+  "eval_id": 0,
+  "config": "without_skill",
+  "expectations": [
+    {"text": "has_category_sections", "passed": true, "evidence": "AI・機械学習、ヘルスケア、メディア・動画、セキュリティ、コンピューティング、コンテナ、コスト最適化、コミュニティ等のカテゴリセクションあり"},
+    {"text": "has_working_links", "passed": true, "evidence": "各記事にhttps://で始まるリンクが含まれている"},
+    {"text": "has_japanese_summaries", "passed": true, "evidence": "全記事が日本語で要約されている"},
+    {"text": "has_date_range", "passed": true, "evidence": "タイトルに「2026年3月5日〜11日」と明記"},
+    {"text": "has_trend_analysis", "passed": false, "evidence": "注目トレンドやまとめのセクションが存在しない"},
+    {"text": "has_blog_suggestions", "passed": false, "evidence": "ブログネタ候補の提案セクションが存在しない"},
+    {"text": "article_count_gte_10", "passed": true, "evidence": "15件以上の記事が含まれている"},
+    {"text": "multiple_sources", "passed": true, "evidence": "AWS News Blog, AWS What's New, Newsy Todayなど複数ソース"}
+  ]
+}

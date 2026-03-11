@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "config": "without_skill",
+  "expectations": [
+    {"text": "has_5_or_more_ideas", "passed": true, "evidence": "10のブログネタ候補が提案されている"},
+    {"text": "ideas_have_type", "passed": false, "evidence": "種類（速報/ハンズオン/比較検証等）の明示的なラベルがない。「ブログの切り口」として記述はあるが体系的な分類ではない"},
+    {"text": "ideas_have_difficulty", "passed": false, "evidence": "難易度の明示的な表記がない（★表記なし）"},
+    {"text": "ideas_have_outline", "passed": true, "evidence": "各ネタに「ブログの切り口」と「書きやすさ」が記載されている"},
+    {"text": "ideas_based_on_real_news", "passed": true, "evidence": "全ネタに参考リンク付き。実際のAWSアップデートに基づいている"},
+    {"text": "has_timing_reason", "passed": false, "evidence": "「なぜ今書くべきか」の明示的な記載がない。書きやすさの説明はあるがタイミングの理由ではない"}
+  ]
+}

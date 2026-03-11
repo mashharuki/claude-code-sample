@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "config": "with_skill",
+  "expectations": [
+    {"text": "has_5_or_more_ideas", "passed": true, "evidence": "5つのブログネタ候補がテーブル形式で提案されている"},
+    {"text": "ideas_have_type", "passed": true, "evidence": "ハンズオン、速報+解説、速報+ハンズオンなど種類が明記"},
+    {"text": "ideas_have_difficulty", "passed": true, "evidence": "★〜★★★の難易度表記あり"},
+    {"text": "ideas_have_outline", "passed": true, "evidence": "各ネタに4項目の記事骨子、想定読者が詳細に記載"},
+    {"text": "ideas_based_on_real_news", "passed": true, "evidence": "全ネタに元記事リンク付き。AgentCore Policy GA、OpenClaw等の実際のアップデートに基づく"},
+    {"text": "has_timing_reason", "passed": true, "evidence": "各ネタに「なぜ今書くべきか」セクションあり（GA直後、日本語記事不足等）"}
+  ]
+}

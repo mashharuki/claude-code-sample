@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "config": "with_skill",
+  "expectations": [
+    {"text": "bedrock_highlighted", "passed": true, "evidence": "★マーク付きでBedrock関連5件が冒頭に専用セクションとして優先表示されている"},
+    {"text": "three_day_scope", "passed": true, "evidence": "「過去3日間」「2026-03-08 〜 2026-03-11」と明記"},
+    {"text": "has_bedrock_blog_ideas", "passed": true, "evidence": "5つのブログネタ候補のうち4つがBedrock関連。各ネタに骨子・想定読者・今書くべき理由あり"},
+    {"text": "has_working_links", "passed": true, "evidence": "全記事にhttps://で始まるリンク付き"},
+    {"text": "non_bedrock_also_shown", "passed": true, "evidence": "新サービス発表、機能アップデート、セキュリティ、日本関連など非Bedrock記事も表示されている"}
+  ]
+}
