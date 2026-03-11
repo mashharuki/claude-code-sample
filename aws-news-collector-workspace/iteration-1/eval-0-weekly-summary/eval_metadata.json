@@ -1,0 +1,47 @@
+{
+  "eval_id": 0,
+  "eval_name": "weekly-summary",
+  "prompt": "今週のAWSの最新情報をまとめてください。カテゴリ別に整理して、重要なものにはリンクも付けてほしいです。",
+  "assertions": [
+    {
+      "name": "has_category_sections",
+      "description": "出力にカテゴリ別セクション（新サービス、AI/ML、セキュリティ等）が含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_working_links",
+      "description": "各記事にhttps://で始まるリンクが含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_japanese_summaries",
+      "description": "記事タイトルまたは説明が日本語で要約されている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_date_range",
+      "description": "レポートに対象期間（日付範囲）が明記されている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_trend_analysis",
+      "description": "注目トレンドやまとめのセクションが含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_blog_suggestions",
+      "description": "ブログネタ候補の提案セクションが含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "article_count_gte_10",
+      "description": "合計10件以上の記事が含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "multiple_sources",
+      "description": "3つ以上の異なる情報源（フィード）からの記事が含まれている",
+      "type": "content_check"
+    }
+  ]
+}

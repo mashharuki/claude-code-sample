@@ -1,0 +1,26 @@
+{
+  "skill_name": "aws-news-collector",
+  "evals": [
+    {
+      "id": 0,
+      "name": "weekly-summary",
+      "prompt": "今週のAWSの最新情報をまとめてください。カテゴリ別に整理して、重要なものにはリンクも付けてほしいです。",
+      "expected_output": "カテゴリ別に整理されたAWS最新情報レポート。各記事に日本語要約とリンク付き。注目トレンドとブログネタ候補も含む。",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "focused-bedrock",
+      "prompt": "直近3日間のAWS情報で、特にAmazon Bedrockに関するアップデートを教えてください。ブログネタにできそうなものがあれば提案もお願いします。",
+      "expected_output": "Bedrock関連の記事がハイライトされた3日間のレポート。Bedrock関連のブログネタ候補付き。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "blog-ideas",
+      "prompt": "AWS Community Builderとして今月書くべきブログのネタを探しています。最新のAWSアップデートからブログにしやすいトピックを提案してください。",
+      "expected_output": "最新情報に基づく具体的なブログネタ5つ以上。各ネタに種類・難易度・想定読者・記事骨子が含まれる。",
+      "files": []
+    }
+  ]
+}

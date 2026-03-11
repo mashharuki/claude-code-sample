@@ -1,0 +1,32 @@
+{
+  "eval_id": 1,
+  "eval_name": "focused-bedrock",
+  "prompt": "直近3日間のAWS情報で、特にAmazon Bedrockに関するアップデートを教えてください。ブログネタにできそうなものがあれば提案もお願いします。",
+  "assertions": [
+    {
+      "name": "bedrock_highlighted",
+      "description": "Bedrock関連の記事が明確にハイライトまたは優先表示されている",
+      "type": "content_check"
+    },
+    {
+      "name": "three_day_scope",
+      "description": "対象期間が3日間に絞られている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_bedrock_blog_ideas",
+      "description": "Bedrock関連のブログネタ候補が提案されている",
+      "type": "content_check"
+    },
+    {
+      "name": "has_working_links",
+      "description": "記事にhttps://で始まるリンクが含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "non_bedrock_also_shown",
+      "description": "Bedrock以外の記事もフィルタリングされずに表示されている（ハイライトのみ）",
+      "type": "content_check"
+    }
+  ]
+}

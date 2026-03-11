@@ -1,0 +1,37 @@
+{
+  "eval_id": 2,
+  "eval_name": "blog-ideas",
+  "prompt": "AWS Community Builderとして今月書くべきブログのネタを探しています。最新のAWSアップデートからブログにしやすいトピックを提案してください。",
+  "assertions": [
+    {
+      "name": "has_5_or_more_ideas",
+      "description": "5つ以上のブログネタ候補が提案されている",
+      "type": "content_check"
+    },
+    {
+      "name": "ideas_have_type",
+      "description": "各ネタに種類（速報/ハンズオン/比較検証等）が記載されている",
+      "type": "content_check"
+    },
+    {
+      "name": "ideas_have_difficulty",
+      "description": "各ネタに難易度が記載されている",
+      "type": "content_check"
+    },
+    {
+      "name": "ideas_have_outline",
+      "description": "各ネタに記事の骨子や想定読者が含まれている",
+      "type": "content_check"
+    },
+    {
+      "name": "ideas_based_on_real_news",
+      "description": "ネタが実際の最新AWSアップデートに基づいている（元記事リンク付き）",
+      "type": "content_check"
+    },
+    {
+      "name": "has_timing_reason",
+      "description": "なぜ今書くべきかの理由が含まれている",
+      "type": "content_check"
+    }
+  ]
+}
