@@ -1,0 +1,39 @@
+{
+  "eval_id": 0,
+  "eval_name": "serverless-api",
+  "prompt": "CDKでサーバーレスなREST APIを作りたいです。API GatewayとLambdaとDynamoDBを使って、TODOアプリのバックエンドを構築してください。CRUD操作ができるようにしてください。",
+  "assertions": [
+    {
+      "name": "uses_l2_constructs",
+      "description": "L2コンストラクト（Table, Function, RestApi等）を使用している（CfnXxx系のL1ではなく）"
+    },
+    {
+      "name": "crud_endpoints",
+      "description": "GET/POST/PUT/DELETE（またはPATCH）のCRUD操作に対応するAPI Gatewayエンドポイントが定義されている"
+    },
+    {
+      "name": "least_privilege_iam",
+      "description": "grantReadWriteData等の最小権限メソッドを使用（ワイルドカードポリシーではない）"
+    },
+    {
+      "name": "has_test_code",
+      "description": "Template.fromStackを使ったCDKテストコードが含まれている"
+    },
+    {
+      "name": "has_deploy_instructions",
+      "description": "cdk deploy等のデプロイ手順が記載されている"
+    },
+    {
+      "name": "removal_policy_set",
+      "description": "DynamoDBテーブルにremovalPolicyが明示的に設定されている"
+    },
+    {
+      "name": "cfn_output",
+      "description": "CfnOutputでAPIのURLが出力されている"
+    },
+    {
+      "name": "arm64_runtime",
+      "description": "LambdaがARM64アーキテクチャまたはNodejs 20.x以上のランタイムを使用している"
+    }
+  ]
+}

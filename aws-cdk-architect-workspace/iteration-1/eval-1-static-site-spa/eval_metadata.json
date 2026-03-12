@@ -1,0 +1,35 @@
+{
+  "eval_id": 1,
+  "eval_name": "static-site-spa",
+  "prompt": "Reactで作ったSPAをAWSにデプロイするCDKスタックを書いてください。CloudFrontとS3を使って、HTTPSでアクセスできるようにしたいです。カスタムドメインは不要です。",
+  "assertions": [
+    {
+      "name": "s3_block_public",
+      "description": "S3バケットにblockPublicAccessが設定されている"
+    },
+    {
+      "name": "cloudfront_https",
+      "description": "CloudFrontでHTTPS（viewerProtocolPolicy: REDIRECT_TO_HTTPS等）が設定されている"
+    },
+    {
+      "name": "oac_or_oai",
+      "description": "Origin Access Control (OAC) またはOrigin Access Identity (OAI) が設定されている"
+    },
+    {
+      "name": "spa_error_handling",
+      "description": "SPA用の403/404エラーページリダイレクト（index.htmlへのフォールバック）が設定されている"
+    },
+    {
+      "name": "bucket_deployment",
+      "description": "BucketDeploymentでフロントエンドのビルド成果物をS3にデプロイする設定がある"
+    },
+    {
+      "name": "has_test_code",
+      "description": "CDKテストコードが含まれている"
+    },
+    {
+      "name": "cfn_output_url",
+      "description": "CfnOutputでCloudFrontのURLが出力されている"
+    }
+  ]
+}

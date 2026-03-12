@@ -1,0 +1,39 @@
+{
+  "eval_id": 2,
+  "eval_name": "complex-architecture",
+  "prompt": "Cognito認証付きAPI + DynamoDB + S3ファイルアップロード + サムネイル生成Lambda。検証用でコスト最小。",
+  "assertions": [
+    {
+      "name": "cognito_auth",
+      "description": "Cognito UserPoolとAPI GatewayのAuthorizerが設定されている"
+    },
+    {
+      "name": "s3_trigger_lambda",
+      "description": "S3のオブジェクト作成イベントでLambdaがトリガーされる設定がある"
+    },
+    {
+      "name": "separate_lambdas",
+      "description": "API用LambdaとS3トリガー用Lambdaが別関数として定義されている"
+    },
+    {
+      "name": "cost_optimization",
+      "description": "コスト最小の設定がある（PAY_PER_REQUEST、removalPolicy: DESTROY等）"
+    },
+    {
+      "name": "least_privilege",
+      "description": "各Lambdaに必要最小限の権限のみ付与されている"
+    },
+    {
+      "name": "has_test_code",
+      "description": "CDKテストコードが含まれている"
+    },
+    {
+      "name": "tags_applied",
+      "description": "リソースにタグが付与されている"
+    },
+    {
+      "name": "deploy_instructions",
+      "description": "デプロイ手順が記載されている"
+    }
+  ]
+}

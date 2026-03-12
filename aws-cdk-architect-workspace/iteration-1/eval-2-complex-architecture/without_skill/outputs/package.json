@@ -1,0 +1,28 @@
+{
+  "name": "cognito-api-stack",
+  "version": "1.0.0",
+  "description": "Cognito authenticated API with API Gateway, Lambda, DynamoDB, and S3 thumbnail generation",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "deploy": "cdk deploy",
+    "destroy": "cdk destroy",
+    "synth": "cdk synth"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.170.0",
+    "constructs": "^10.4.2",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.0",
+    "aws-cdk": "^2.170.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.6.3"
+  }
+}
