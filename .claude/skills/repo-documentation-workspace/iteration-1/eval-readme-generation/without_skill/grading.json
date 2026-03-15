@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "japanese_output", "passed": true, "evidence": "README全体が日本語で記述"},
+    {"text": "markdown_format", "passed": true, "evidence": "適切なヘッダー、テーブル、コードブロック、tree表示を使用"},
+    {"text": "tech_stack_table", "passed": false, "evidence": "専用の技術スタックテーブルなし。各アプリの説明内にインラインで記載"},
+    {"text": "setup_section", "passed": true, "evidence": "各サンプルアプリの起動手順がコマンド付きで記載"},
+    {"text": "commands_table", "passed": true, "evidence": "cc-sddコマンドのテーブル一覧あり"},
+    {"text": "comprehensive_structure", "passed": true, "evidence": "特徴、モード説明、構成、アプリ、SDD、Skills、MCP、前提条件、参考文献を網羅。ただしアーキテクチャ概要セクションなし"}
+  ]
+}

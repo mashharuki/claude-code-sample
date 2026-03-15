@@ -1,0 +1,32 @@
+{
+  "eval_id": 0,
+  "eval_name": "japanese-casual",
+  "prompt": "このリポジトリ何？使い方教えて",
+  "assertions": [
+    {
+      "name": "japanese_output",
+      "description": "出力が日本語であること",
+      "check": "Output is written in Japanese"
+    },
+    {
+      "name": "tech_stack_present",
+      "description": "技術スタックが記載されていること",
+      "check": "Output includes a tech stack / technology section"
+    },
+    {
+      "name": "directory_structure",
+      "description": "ディレクトリ構成が記載されていること",
+      "check": "Output includes directory/project structure"
+    },
+    {
+      "name": "setup_instructions",
+      "description": "セットアップ・起動手順が記載されていること",
+      "check": "Output includes setup/run instructions"
+    },
+    {
+      "name": "no_file_created",
+      "description": "ファイルを作成せずチャット出力のみであること",
+      "check": "No README.md or other documentation files were created in the repo"
+    }
+  ]
+}

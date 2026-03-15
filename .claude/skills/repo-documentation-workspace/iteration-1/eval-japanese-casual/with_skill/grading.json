@@ -1,0 +1,11 @@
+{
+  "eval_id": 0,
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "japanese_output", "passed": true, "evidence": "全体が日本語で記述されている"},
+    {"text": "tech_stack_present", "passed": true, "evidence": "技術スタックがテーブル形式で記載（言語、フレームワーク、フロントエンド、データ管理、AIツール、MCPサーバー、Spec駆動開発）"},
+    {"text": "directory_structure", "passed": true, "evidence": "tree形式でディレクトリ構成が詳細に記載。各ディレクトリにコメント付き"},
+    {"text": "setup_instructions", "passed": true, "evidence": "前提条件、インストール手順、各サンプルアプリの起動手順が具体的なコマンド付きで記載"},
+    {"text": "no_file_created", "passed": true, "evidence": "output.mdに保存されただけでリポジトリルートにファイルは作成されていない"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "english_output", "passed": true, "evidence": "Entire output is in English"},
+    {"text": "tech_stack_present", "passed": false, "evidence": "No dedicated tech stack section. Technologies mentioned inline within descriptions"},
+    {"text": "directory_structure", "passed": false, "evidence": "No tree format directory structure. Content described as numbered list"},
+    {"text": "run_instructions", "passed": true, "evidence": "Run instructions for htmx Todo and World Mini App included with commands"},
+    {"text": "features_listed", "passed": true, "evidence": "Features described across sample apps, configuration, SDD, and workspaces"}
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "skill_name": "repo-documentation",
+  "iteration": 1,
+  "configurations": [
+    {
+      "name": "with_skill",
+      "results": [
+        {
+          "eval_id": 0,
+          "eval_name": "japanese-casual",
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "tokens": 39278,
+          "duration_seconds": 141.5
+        },
+        {
+          "eval_id": 1,
+          "eval_name": "english-overview",
+          "pass_rate": 1.0,
+          "passed": 5,
+          "total": 5,
+          "tokens": 33500,
+          "duration_seconds": 148.1
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "readme-generation",
+          "pass_rate": 1.0,
+          "passed": 6,
+          "total": 6,
+          "tokens": 39809,
+          "duration_seconds": 157.9
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 1.0,
+        "stddev_pass_rate": 0.0,
+        "mean_tokens": 37529,
+        "mean_duration_seconds": 149.2
+      }
+    },
+    {
+      "name": "without_skill",
+      "results": [
+        {
+          "eval_id": 0,
+          "eval_name": "japanese-casual",
+          "pass_rate": 0.8,
+          "passed": 4,
+          "total": 5,
+          "tokens": 23209,
+          "duration_seconds": 97.7
+        },
+        {
+          "eval_id": 1,
+          "eval_name": "english-overview",
+          "pass_rate": 0.6,
+          "passed": 3,
+          "total": 5,
+          "tokens": 28671,
+          "duration_seconds": 113.3
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "readme-generation",
+          "pass_rate": 0.83,
+          "passed": 5,
+          "total": 6,
+          "tokens": 28442,
+          "duration_seconds": 126.5
+        }
+      ],
+      "aggregate": {
+        "mean_pass_rate": 0.743,
+        "stddev_pass_rate": 0.1,
+        "mean_tokens": 26774,
+        "mean_duration_seconds": 112.5
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+0.257 (74.3% → 100%)",
+    "tokens": "+10755 (26774 → 37529)",
+    "duration_seconds": "+36.7 (112.5s → 149.2s)"
+  }
+}
