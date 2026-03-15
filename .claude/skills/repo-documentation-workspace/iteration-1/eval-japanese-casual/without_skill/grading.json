@@ -1,0 +1,11 @@
+{
+  "eval_id": 0,
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "japanese_output", "passed": true, "evidence": "全体が日本語で記述されている"},
+    {"text": "tech_stack_present", "passed": true, "evidence": "サンプルアプリのテーブルに技術スタックが含まれるが、専用の技術スタックセクションはない"},
+    {"text": "directory_structure", "passed": false, "evidence": "ディレクトリ構成のtree表示がない。箇条書きで一部言及のみ"},
+    {"text": "setup_instructions", "passed": true, "evidence": "MCP設定、サンプルアプリの起動手順、cc-sddセットアップが記載"},
+    {"text": "no_file_created", "passed": true, "evidence": "output.mdに保存されただけでリポジトリルートにファイルは作成されていない"}
+  ]
+}

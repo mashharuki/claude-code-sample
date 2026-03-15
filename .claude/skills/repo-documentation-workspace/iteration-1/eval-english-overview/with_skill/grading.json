@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "english_output", "passed": true, "evidence": "Entire output is in English"},
+    {"text": "tech_stack_present", "passed": true, "evidence": "Tech stack table with Language, Frameworks, Frontend, AI Tooling, MCP Servers, Code Review, Data categories"},
+    {"text": "directory_structure", "passed": true, "evidence": "Detailed tree format with comments for each directory"},
+    {"text": "run_instructions", "passed": true, "evidence": "Prerequisites, Claude Code launch, cc-sdd install, htmx Todo App, World Mini App instructions all included"},
+    {"text": "features_listed", "passed": true, "evidence": "Features organized into AI Development Tooling, Spec-Driven Development, Sample Applications, Skill Evaluation Workspaces"}
+  ]
+}

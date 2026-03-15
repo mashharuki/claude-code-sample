@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "japanese_output", "passed": true, "evidence": "README全体が日本語で記述"},
+    {"text": "markdown_format", "passed": true, "evidence": "適切なヘッダー、テーブル、コードブロック、tree表示を使用"},
+    {"text": "tech_stack_table", "passed": true, "evidence": "技術スタックが6カテゴリのテーブル形式（言語、フレームワーク、フロントエンド、AIツール、MCPサーバー、インフラ）"},
+    {"text": "setup_section", "passed": true, "evidence": "前提条件、Claude Code起動、cc-sdd導入、各アプリ起動手順がステップバイステップ"},
+    {"text": "commands_table", "passed": true, "evidence": "9コマンドのテーブル一覧あり"},
+    {"text": "comprehensive_structure", "passed": true, "evidence": "概要、技術スタック、ディレクトリ構成、機能一覧、セットアップ、主要コマンド、アーキテクチャ概要、参考文献の全セクション網羅"}
+  ]
+}
