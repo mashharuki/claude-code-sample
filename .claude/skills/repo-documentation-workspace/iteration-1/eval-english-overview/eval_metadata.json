@@ -1,0 +1,32 @@
+{
+  "eval_id": 1,
+  "eval_name": "english-overview",
+  "prompt": "explain this repo and how to run it",
+  "assertions": [
+    {
+      "name": "english_output",
+      "description": "Output is written in English",
+      "check": "Output is written in English"
+    },
+    {
+      "name": "tech_stack_present",
+      "description": "Tech stack is documented",
+      "check": "Output includes a tech stack / technology section"
+    },
+    {
+      "name": "directory_structure",
+      "description": "Directory structure is documented",
+      "check": "Output includes directory/project structure"
+    },
+    {
+      "name": "run_instructions",
+      "description": "Run instructions are included",
+      "check": "Output includes how to run/start the project"
+    },
+    {
+      "name": "features_listed",
+      "description": "Features or functionality are listed",
+      "check": "Output lists features or main functionality of the project"
+    }
+  ]
+}

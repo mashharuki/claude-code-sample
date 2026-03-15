@@ -1,0 +1,37 @@
+{
+  "eval_id": 2,
+  "eval_name": "readme-generation",
+  "prompt": "このプロジェクトのREADMEを生成して",
+  "assertions": [
+    {
+      "name": "japanese_output",
+      "description": "READMEが日本語であること",
+      "check": "Output README is written in Japanese"
+    },
+    {
+      "name": "markdown_format",
+      "description": "Markdown形式で構造化されていること",
+      "check": "Output uses proper Markdown formatting with headers, tables, code blocks"
+    },
+    {
+      "name": "tech_stack_table",
+      "description": "技術スタックがテーブル形式であること",
+      "check": "Tech stack is presented in a table format"
+    },
+    {
+      "name": "setup_section",
+      "description": "セットアップセクションがあること",
+      "check": "Output has a setup/installation section with step-by-step instructions"
+    },
+    {
+      "name": "commands_table",
+      "description": "主要コマンド一覧があること",
+      "check": "Output includes a table or list of key commands"
+    },
+    {
+      "name": "comprehensive_structure",
+      "description": "テンプレートに沿った包括的な構造であること",
+      "check": "Output follows a comprehensive README structure (overview, stack, structure, features, setup)"
+    }
+  ]
+}
