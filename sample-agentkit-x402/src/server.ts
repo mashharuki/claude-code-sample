@@ -11,21 +11,17 @@
  * 環境変数 (.env に記述):
  *   AGENT_PRIVATE_KEY  ... デモ用エージェント秘密鍵（省略でランダム生成）
  *   PORT               ... ポート番号（デフォルト: 3001）
+ *   PAY_TO_ADDRESS     ... 支払い受取ウォレットアドレス
  *   SKIP_AGENT_BOOK    ... "true" で AgentBook チェックをスキップ（開発用）
  *
- * チェーン構成:
+ * チェーン:
  *   支払い・署名: World Chain mainnet (eip155:480)
  *   AgentBook:   World Chain mainnet 固定（SDK の唯一のデプロイ先）
- *
- * テストネット (eip155:4801) について:
- *   AgentBook コントラクトが未デプロイのため非対応。
- *   ローカル開発は SKIP_AGENT_BOOK=true を使用してください。
  */
 
 import {
 	buildAgentkitSchema,
 	createAgentBookVerifier,
-	formatSIWEMessage,
 	parseAgentkitHeader,
 	validateAgentkitMessage,
 	verifyAgentkitSignature,
@@ -36,73 +32,39 @@ import express, { type Request, type Response } from "express";
 import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-
-// ──────────────────────────────────────────
-// チェーン定数
-// ──────────────────────────────────────────
-
-/** World Chain mainnet (eip155:480) — AgentBook のデプロイ先かつ支払いチェーン */
-const WORLD_CHAIN = "eip155:480" as const;
-
-/**
- * World Chain mainnet の USDC コントラクトアドレス
- * 支払い受取時に x402 クライアントが参照するトークン
- */
-const WORLD_CHAIN_USDC = "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1";
+import { buildAgentkitHeader } from "./agentkit-client.ts";
+import { AGENTKIT_STATEMENT, WORLD_CHAIN, WORLD_CHAIN_USDC } from "./constants.ts";
+import type { DemoStep, VerifyResult } from "./types.ts";
 
 // ──────────────────────────────────────────
 // 設定
 // ──────────────────────────────────────────
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT ?? 3001);
-// ローカル開発では AgentBook（World ID オンチェーン検証）をスキップできる
 const SKIP_AGENT_BOOK = process.env.SKIP_AGENT_BOOK === "true";
 
-// ──────────────────────────────────────────
 // デモ用エージェントウォレット（EOA）
-// bun は .env を自動ロードするため dotenv 不要
-// ──────────────────────────────────────────
 const PRIVATE_KEY =
 	process.env.AGENT_PRIVATE_KEY ?? ethers.Wallet.createRandom().privateKey;
 const agentWallet = new ethers.Wallet(PRIVATE_KEY);
 
-// AgentBook ベリファイア
-// SDK 内部で World Chain mainnet (eip155:480) の AgentBook コントラクトを参照する
+// AgentBook ベリファイア（World Chain mainnet の AgentBook コントラクトを参照）
 const agentBook = createAgentBookVerifier();
-
-// ──────────────────────────────────────────
-// 型定義
-// ──────────────────────────────────────────
-interface VerifyResult {
-	valid: boolean;
-	step?: string;
-	error?: string;
-	address?: string;
-	humanId?: string;
-	devMode?: boolean;
-}
-
-interface DemoStep {
-	label: string;
-	detail: string;
-}
 
 // ──────────────────────────────────────────
 // 402 レスポンス生成
 // ──────────────────────────────────────────
 function buildChallengeResponse(resourceUri: string) {
-	// domain は hostname のみ（ポートなし）— 公式 validateAgentkitMessage に合わせる
+	// domain は hostname のみ（ポートなし）— validateAgentkitMessage の仕様に準拠
 	const domain = new URL(resourceUri).hostname;
-	const nonce = crypto.randomBytes(16).toString("hex");
-	const issuedAt = new Date().toISOString();
 
 	const info: AgentkitExtensionInfo = {
 		domain,
 		uri: resourceUri,
 		version: "1",
-		nonce,
-		issuedAt,
-		statement: "Verify your agent is backed by a real human",
+		nonce: crypto.randomBytes(16).toString("hex"),
+		issuedAt: new Date().toISOString(),
+		statement: AGENTKIT_STATEMENT,
 		resources: [resourceUri],
 	};
 
@@ -120,7 +82,6 @@ function buildChallengeResponse(resourceUri: string) {
 				scheme: "exact",
 				price: "$0.001",
 				network: WORLD_CHAIN,
-				// 本番環境では自分の受取ウォレットアドレスに変更すること
 				payTo:
 					process.env.PAY_TO_ADDRESS ??
 					"0x0000000000000000000000000000000000000000",
@@ -138,7 +99,7 @@ function buildChallengeResponse(resourceUri: string) {
 }
 
 // ──────────────────────────────────────────
-// agentkit ヘッダー検証（公式 SDK を使用）
+// agentkit ヘッダー検証
 // ──────────────────────────────────────────
 async function verifyRequest(
 	header: string,
@@ -182,7 +143,6 @@ async function verifyRequest(
 		return { valid: true, address: verification.address, humanId };
 	}
 
-	// DEV: SKIP_AGENT_BOOK=true の場合はバイパス
 	return {
 		valid: true,
 		address: verification.address,
@@ -198,27 +158,10 @@ async function runAgentFlow(resourceUri: string) {
 	const response402 = buildChallengeResponse(resourceUri);
 	const { info, supportedChains } = response402.extensions.agentkit;
 
-	// EOA 用に eip191 チェーンを選択
-	const chain = supportedChains.find((c) => c.type === "eip191")!;
-
-	// 公式 formatSIWEMessage で SIWE メッセージを構築
-	// CompleteAgentkitInfo には chainId・type が必要
-	const siweMessage = formatSIWEMessage(
-		{ ...info, chainId: chain.chainId, type: chain.type },
-		agentWallet.address,
-	);
-
-	const signature = await agentWallet.signMessage(siweMessage);
-
-	const headerPayload = {
-		...info,
-		address: agentWallet.address,
-		chainId: chain.chainId,
-		type: "eip191" as const,
-		signature,
-	};
-	const headerValue = Buffer.from(JSON.stringify(headerPayload)).toString(
-		"base64",
+	const { headerValue, siweMessage, signature } = await buildAgentkitHeader(
+		info,
+		supportedChains,
+		agentWallet,
 	);
 
 	const result = await verifyRequest(headerValue, resourceUri);
@@ -232,10 +175,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public")));
 
-/**
- * GET /api/weather
- * x402 + AgentKit で保護されたリソース。
- */
+/** GET /api/weather — x402 + AgentKit で保護されたリソース */
 app.get("/api/weather", async (req: Request, res: Response) => {
 	const agentkitHeader = req.headers["agentkit"] as string | undefined;
 	const resourceUri = `http://localhost:${PORT}${req.path}`;
@@ -245,12 +185,7 @@ app.get("/api/weather", async (req: Request, res: Response) => {
 		if (result.valid) {
 			res.json({
 				success: true,
-				data: {
-					weather: "晴れ",
-					temperature: "22°C",
-					humidity: "45%",
-					city: "東京",
-				},
+				data: { weather: "晴れ", temperature: "22°C", humidity: "45%", city: "東京" },
 				agent: result.address,
 				humanId: result.humanId,
 				accessMode: "free (agentkit)",
@@ -264,37 +199,23 @@ app.get("/api/weather", async (req: Request, res: Response) => {
 	res.status(402).json(buildChallengeResponse(resourceUri));
 });
 
-/**
- * GET /api/demo/step1 — 402 レスポンスの内容を返す
- */
+/** GET /api/demo/step1 — 402 レスポンスの内容を返す */
 app.get("/api/demo/step1", (_req: Request, res: Response) => {
 	const resourceUri = `http://localhost:${PORT}/api/weather`;
-	res.json({
-		step: 1,
-		httpStatus: 402,
-		response: buildChallengeResponse(resourceUri),
-	});
+	res.json({ step: 1, httpStatus: 402, response: buildChallengeResponse(resourceUri) });
 });
 
-/**
- * GET /api/demo/step2 — 署名フローの詳細を返す
- */
+/** GET /api/demo/step2 — 署名フローの詳細を返す */
 app.get("/api/demo/step2", async (_req: Request, res: Response) => {
 	const resourceUri = `http://localhost:${PORT}/api/weather`;
 	const { response402, siweMessage, signature, result } =
 		await runAgentFlow(resourceUri);
-	const info = response402.extensions.agentkit.info;
+	const { info } = response402.extensions.agentkit;
 
 	const steps: DemoStep[] = [
 		{ label: "① 402 を受信", detail: `ノンス: ${info.nonce.slice(0, 10)}...` },
-		{
-			label: "② parseAgentkitHeader でデコード",
-			detail: "Base64 → JSON → スキーマ検証",
-		},
-		{
-			label: "③ validateAgentkitMessage",
-			detail: `ドメイン: ${info.domain} / TTL: 5分`,
-		},
+		{ label: "② parseAgentkitHeader でデコード", detail: "Base64 → JSON → スキーマ検証" },
+		{ label: "③ validateAgentkitMessage", detail: `ドメイン: ${info.domain} / TTL: 5分` },
 		{
 			label: "④ verifyAgentkitSignature (ERC-1271 / EOA 自動判定)",
 			detail: `${signature.slice(0, 18)}...`,
@@ -320,9 +241,7 @@ app.get("/api/demo/step2", async (_req: Request, res: Response) => {
 	});
 });
 
-/**
- * GET /api/demo/step3 — 認証済みリソースを返す
- */
+/** GET /api/demo/step3 — 認証済みリソースを返す */
 app.get("/api/demo/step3", async (_req: Request, res: Response) => {
 	const resourceUri = `http://localhost:${PORT}/api/weather`;
 	const { result } = await runAgentFlow(resourceUri);
@@ -331,12 +250,7 @@ app.get("/api/demo/step3", async (_req: Request, res: Response) => {
 		res.json({
 			step: 3,
 			success: true,
-			data: {
-				weather: "晴れ",
-				temperature: "22°C",
-				humidity: "45%",
-				city: "東京",
-			},
+			data: { weather: "晴れ", temperature: "22°C", humidity: "45%", city: "東京" },
 			agent: result.address,
 			humanId: result.humanId,
 			accessMode: "free (agentkit)",
@@ -350,9 +264,7 @@ app.get("/api/demo/step3", async (_req: Request, res: Response) => {
 	}
 });
 
-/**
- * GET /api/agent-info — デモ用ウォレットアドレスを返す
- */
+/** GET /api/agent-info — デモ用ウォレット・チェーン情報を返す */
 app.get("/api/agent-info", (_req: Request, res: Response) => {
 	res.json({
 		address: agentWallet.address,

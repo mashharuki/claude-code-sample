@@ -5,19 +5,17 @@
  * agentkit ヘッダー値を生成して標準出力に出力する。
  *
  * 使い方:
- *   bun run src/gen-header.ts
+ *   bun gen-header
  *
- * 出力された AGENTKIT_HEADER の値を requests.http の
- * @agentkitHeader に貼り付けてください。
+ * 出力された値を requests.http の @agentkitHeader に貼り付けてください。
  * ヘッダーの有効期限は 5 分です。
  */
 
-import {
-	formatSIWEMessage,
-	type AgentkitExtensionInfo,
-} from "@worldcoin/agentkit-core";
 import { ethers } from "ethers";
 import crypto from "node:crypto";
+import { buildAgentkitHeader } from "./agentkit-client.ts";
+import { AGENTKIT_STATEMENT, WORLD_CHAIN } from "./constants.ts";
+import type { AgentkitExtensionInfo } from "@worldcoin/agentkit-core";
 
 // ──────────────────────────────────────────
 // 設定（bun は .env を自動ロード）
@@ -27,43 +25,33 @@ const PRIVATE_KEY =
 	process.env.AGENT_PRIVATE_KEY ?? ethers.Wallet.createRandom().privateKey;
 const wallet = new ethers.Wallet(PRIVATE_KEY);
 
-const WORLD_CHAIN = "eip155:480" as const;
 const RESOURCE_URI = `http://localhost:${PORT}/api/weather`;
 
 // ──────────────────────────────────────────
-// チャレンジを自己生成して署名
+// チャレンジ情報を組み立て（サーバーが生成するものと同じ構造）
 // ──────────────────────────────────────────
-const domain = new URL(RESOURCE_URI).hostname;
-const nonce = crypto.randomBytes(16).toString("hex");
-const issuedAt = new Date().toISOString();
-
 const info: AgentkitExtensionInfo = {
-	domain,
+	domain: new URL(RESOURCE_URI).hostname,
 	uri: RESOURCE_URI,
 	version: "1",
-	nonce,
-	issuedAt,
-	statement: "Verify your agent is backed by a real human",
+	nonce: crypto.randomBytes(16).toString("hex"),
+	issuedAt: new Date().toISOString(),
+	statement: AGENTKIT_STATEMENT,
 	resources: [RESOURCE_URI],
 };
 
-const siweMessage = formatSIWEMessage(
-	{ ...info, chainId: WORLD_CHAIN, type: "eip191" },
-	wallet.address,
-);
+const supportedChains = [
+	{ chainId: WORLD_CHAIN, type: "eip191" as const },
+	{ chainId: WORLD_CHAIN, type: "eip1271" as const },
+];
 
-const signature = await wallet.signMessage(siweMessage);
-
-const headerPayload = {
-	...info,
-	address: wallet.address,
-	chainId: WORLD_CHAIN,
-	type: "eip191",
-	signature,
-};
-
-const headerValue = Buffer.from(JSON.stringify(headerPayload)).toString(
-	"base64",
+// ──────────────────────────────────────────
+// ヘッダーを生成
+// ──────────────────────────────────────────
+const { headerValue, signature, chain } = await buildAgentkitHeader(
+	info,
+	supportedChains,
+	wallet,
 );
 
 // ──────────────────────────────────────────
@@ -72,10 +60,11 @@ const headerValue = Buffer.from(JSON.stringify(headerPayload)).toString(
 console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 console.log(" agentkit ヘッダー生成完了");
 console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-console.log(`Wallet : ${wallet.address}`);
-console.log(`Nonce  : ${nonce}`);
-console.log(`Issued : ${issuedAt}`);
-console.log(`Chain  : ${WORLD_CHAIN}`);
+console.log(`Wallet    : ${wallet.address}`);
+console.log(`Nonce     : ${info.nonce}`);
+console.log(`Issued At : ${info.issuedAt}`);
+console.log(`Chain     : ${chain.chainId} (${chain.type})`);
+console.log(`Signature : ${signature.slice(0, 20)}...`);
 console.log("");
 console.log("▼ requests.http の @agentkitHeader に貼り付けてください");
 console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
