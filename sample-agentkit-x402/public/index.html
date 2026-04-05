@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentKit x402 Tutorial</title>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    /* Agent info bar */
+    #agent-bar {
+      background: #1e2433;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      padding: 0.75rem 1.2rem;
+      margin-bottom: 2rem;
+      font-size: 0.83rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #agent-bar .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-step {
+      background: #1e2433;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.82rem;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    .flow-arrow {
+      color: #334155;
+      font-size: 1rem;
+    }
+
+    /* Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .step-card {
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: #1e2433;
+      cursor: pointer;
+    }
+
+    .step-number {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step-1 .step-number { background: #7c3aed22; color: #a78bfa; border: 1px solid #7c3aed66; }
+    .step-2 .step-number { background: #2563eb22; color: #60a5fa; border: 1px solid #2563eb66; }
+    .step-3 .step-number { background: #05966922; color: #34d399; border: 1px solid #05966966; }
+
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .step-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .run-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .run-btn:hover { opacity: 0.85; }
+
+    .step-1 .run-btn { background: #7c3aed; color: #fff; }
+    .step-2 .run-btn { background: #2563eb; color: #fff; }
+    .step-3 .run-btn { background: #059669; color: #fff; }
+
+    .step-body {
+      padding: 1.2rem;
+    }
+
+    /* Result areas */
+    .result-area {
+      min-height: 40px;
+    }
+
+    /* Code / JSON display */
+    pre {
+      background: #0d1117;
+      border: 1px solid #1e2433;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.78rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: #a8b4c8;
+      line-height: 1.6;
+    }
+
+    /* Status badges */
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .badge-402 { background: #7c2d12; color: #fb923c; }
+    .badge-200 { background: #14532d; color: #4ade80; }
+
+    /* Step 2 checklist */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.83rem;
+    }
+
+    .check-icon { color: #22c55e; flex-shrink: 0; }
+    .check-label { font-weight: 600; color: #cbd5e1; }
+    .check-detail { color: #64748b; font-size: 0.78rem; margin-top: 0.1rem; }
+
+    /* Step 3 weather card */
+    .weather-card {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      border-radius: 10px;
+      padding: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .weather-icon { font-size: 3rem; }
+
+    .weather-info .city { font-size: 1rem; color: #94a3b8; }
+    .weather-info .temp { font-size: 2.2rem; font-weight: 700; }
+    .weather-info .detail { font-size: 0.82rem; color: #64748b; }
+
+    .access-info {
+      margin-top: 1rem;
+      padding: 0.6rem 0.9rem;
+      background: #14532d33;
+      border: 1px solid #166534;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #86efac;
+    }
+
+    /* HTMX loading indicator */
+    .htmx-indicator {
+      display: none;
+      color: #64748b;
+      font-size: 0.82rem;
+      padding: 0.4rem 0;
+    }
+
+    .htmx-request .htmx-indicator { display: block; }
+
+    /* Legend */
+    .legend {
+      margin-top: 2.5rem;
+      padding: 1.2rem;
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.8;
+    }
+
+    .legend h3 { color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.6rem; }
+    .legend code { background: #0d1117; padding: 0.1rem 0.4rem; border-radius: 3px; color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <h1>AgentKit x402 チュートリアル</h1>
+      <p>人間に裏付けられたエージェントが x402 保護リソースに無料アクセスする流れを体験できます</p>
+    </header>
+
+    <!-- Agent wallet info -->
+    <div id="agent-bar"
+         hx-get="/api/agent-info"
+         hx-trigger="load"
+         hx-swap="innerHTML">
+      <span class="dot"></span>
+      <span>エージェントウォレットを取得中...</span>
+    </div>
+
+    <!-- Flow diagram -->
+    <div class="flow">
+      <div class="flow-step">エージェント</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">GET /api/weather</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">402 + AgentKit チャレンジ</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">SIWE 署名</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">agentkit ヘッダー付きリトライ</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">200 OK（無料アクセス）</div>
+    </div>
+
+    <div class="steps">
+
+      <!-- Step 1 -->
+      <div class="step-card step-1">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div>
+            <div class="step-title">保護リソースへのアクセス試行</div>
+            <div class="step-desc">AgentKit ヘッダーなしでリクエスト → 402 が返ってくる</div>
+          </div>
+          <button class="run-btn"
+                  hx-get="/api/demo/step1"
+                  hx-target="#result-step1"
+                  hx-swap="innerHTML"
+                  hx-indicator="#loading-step1">
+            実行
+          </button>
+        </div>
+        <div class="step-body">
+          <div id="loading-step1" class="htmx-indicator">取得中...</div>
+          <div id="result-step1" class="result-area"></div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card step-2">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div>
+            <div class="step-title">AgentKit 認証フロー</div>
+            <div class="step-desc">チャレンジを受け取り、SIWE メッセージに署名して送信</div>
+          </div>
+          <button class="run-btn"
+                  hx-get="/api/demo/step2"
+                  hx-target="#result-step2"
+                  hx-swap="innerHTML"
+                  hx-indicator="#loading-step2">
+            実行
+          </button>
+        </div>
+        <div class="step-body">
+          <div id="loading-step2" class="htmx-indicator">署名中...</div>
+          <div id="result-step2" class="result-area"></div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card step-3">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div>
+            <div class="step-title">無料アクセス確認</div>
+            <div class="step-desc">認証済みエージェントとして保護リソースのデータを取得</div>
+          </div>
+          <button class="run-btn"
+                  hx-get="/api/demo/step3"
+                  hx-target="#result-step3"
+                  hx-swap="innerHTML"
+                  hx-indicator="#loading-step3">
+            実行
+          </button>
+        </div>
+        <div class="step-body">
+          <div id="loading-step3" class="htmx-indicator">データ取得中...</div>
+          <div id="result-step3" class="result-area"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <h3>仕組みの概要</h3>
+      <p>
+        <strong>x402</strong> は HTTP 402 ステータスコードを使ったオープンな支払いプロトコルです。<br>
+        <strong>AgentKit</strong> は World ID と連携し、エージェントが「人間に裏付けられている」ことを証明することで
+        <code>free</code> / <code>free-trial</code> / <code>discount</code> モードの優待アクセスを得られる仕組みです。<br><br>
+        エージェントは 402 レスポンス内の <code>extensions.agentkit.info</code> からチャレンジを取得し、
+        EIP-4361 (SIWE) 形式のメッセージに署名して <code>agentkit</code> ヘッダーとして送信します。<br><br>
+        本番環境では <code>npx @worldcoin/agentkit-cli register &lt;address&gt;</code> でウォレットを
+        World ID に紐付けた後、<code>SKIP_AGENT_BOOK</code> 環境変数を外すと
+        AgentBook のオンチェーン検証が有効になります。
+      </p>
+    </div>
+
+  </div>
+
+  <!-- htmx レスポンス用テンプレートをサーバーでレンダリングする代わりに
+       JSON をクライアント側でパースして表示する処理 -->
+  <script>
+    // htmx の afterSwap イベントで JSON を受け取ったら HTML に変換
+    document.body.addEventListener('htmx:afterSwap', function (evt) {
+      const target = evt.detail.target;
+      const rawText = target.innerHTML.trim();
+
+      // JSON かどうかチェック
+      let data;
+      try { data = JSON.parse(rawText); } catch { return; }
+
+      target.innerHTML = renderStep(data);
+    });
+
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderStep(data) {
+      // /api/agent-info
+      if (data.address && !data.step) {
+        const el = document.getElementById('agent-bar');
+        if (el) {
+          const devBadge = data.skipAgentBook
+            ? ` &nbsp;<span style="background:#7c2d12;color:#fb923c;font-size:.7rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;">DEV: AgentBook スキップ中</span>`
+            : '';
+          el.innerHTML = `<span class="dot"></span><strong>Agent Wallet:</strong>&nbsp;${esc(data.address)}${devBadge}`;
+        }
+        return '';
+      }
+
+      if (data.step === 1) {
+        return `
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+            <span class="badge badge-402">HTTP 402</span>
+            <span style="font-size:.82rem;color:#94a3b8;">Payment Required — AgentKit チャレンジが含まれています</span>
+          </div>
+          <pre>${esc(JSON.stringify(data.response, null, 2))}</pre>`;
+      }
+
+      if (data.step === 2) {
+        const items = (data.steps || []).map(s => `
+          <div class="check-item">
+            <span class="check-icon">✓</span>
+            <div>
+              <div class="check-label">${esc(s.label)}</div>
+              <div class="check-detail">${esc(s.detail)}</div>
+            </div>
+          </div>`).join('');
+
+        return `
+          <div class="checklist">${items}</div>
+          <p style="font-size:.8rem;color:#64748b;margin-bottom:.5rem;">SIWE メッセージ（署名対象）</p>
+          <pre>${esc(data.siweMessage)}</pre>`;
+      }
+
+      if (data.step === 3) {
+        if (!data.success) {
+          return `<pre style="color:#f87171;">${esc(JSON.stringify(data, null, 2))}</pre>`;
+        }
+        return `
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+            <span class="badge badge-200">HTTP 200</span>
+            <span style="font-size:.82rem;color:#4ade80;">AgentKit 認証成功！</span>
+          </div>
+          <div class="weather-card">
+            <div class="weather-icon">☀️</div>
+            <div class="weather-info">
+              <div class="city">${esc(data.data.city)}</div>
+              <div class="temp">${esc(data.data.temperature)}</div>
+              <div class="detail">湿度 ${esc(data.data.humidity)} ／ ${esc(data.data.weather)}</div>
+            </div>
+          </div>
+          <div class="access-info">
+            アクセスモード: <strong>${esc(data.accessMode)}</strong>
+            ／ エージェント: <code style="font-size:.78rem;">${esc(data.agent)}</code>
+          </div>`;
+      }
+
+      return `<pre>${esc(JSON.stringify(data, null, 2))}</pre>`;
+    }
+  </script>
+</body>
+</html>

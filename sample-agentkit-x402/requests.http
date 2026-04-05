@@ -1,0 +1,113 @@
+### AgentKit x402 API — REST Client テストファイル
+###
+### 前提:
+###   1. サーバーを起動しておく: bun dev
+###   2. agentkit ヘッダーが必要なリクエストは事前に生成する:
+###        bun run src/gen-header.ts
+###      生成された値を .env.http の AGENTKIT_HEADER に貼り付ける
+###
+### 環境ファイル (.env.http) の形式:
+###   BASE_URL=http://localhost:3001
+###   AGENTKIT_HEADER=<bun run src/gen-header.ts で生成した値>
+
+@baseUrl = http://localhost:3001
+
+
+# ============================================================
+# 0. サーバー情報の確認
+# ============================================================
+
+### エージェントウォレット・チェーン情報を取得
+# チェーンが World Chain (eip155:480) になっているか確認する
+GET {{baseUrl}}/api/agent-info
+Accept: application/json
+
+
+# ============================================================
+# 1. 保護リソースへの素のリクエスト（agentkit ヘッダーなし）
+# ============================================================
+
+### 1-1. agentkit ヘッダーなし → 402 + AgentKit チャレンジが返ることを確認
+# 期待レスポンス:
+#   HTTP 402
+#   extensions.agentkit.info に domain / nonce / issuedAt が含まれる
+#   extensions.agentkit.supportedChains に eip155:480 (eip191 / eip1271) が含まれる
+GET {{baseUrl}}/api/weather
+Accept: application/json
+
+
+### 1-2. 不正な agentkit ヘッダー（Base64 として不正）→ 検証失敗を確認
+# 期待レスポンス: HTTP 402（parse エラーで素通しされ再チャレンジ）
+GET {{baseUrl}}/api/weather
+Accept: application/json
+agentkit: this-is-not-valid-base64!!!
+
+
+### 1-3. 正しい Base64 だが中身が空 → スキーマエラーを確認
+# 期待レスポンス: HTTP 402
+GET {{baseUrl}}/api/weather
+Accept: application/json
+agentkit: e30=
+
+
+# ============================================================
+# 2. AgentKit 認証付きリクエスト
+# ============================================================
+
+### 2-1. 有効な agentkit ヘッダー → 200 OK を確認
+#
+# ヘッダーの生成手順:
+#   bun run src/gen-header.ts
+# 出力された AGENTKIT_HEADER の値を下の @agentkitHeader に貼り付ける
+#
+# 期待レスポンス:
+#   HTTP 200
+#   { success: true, data: { weather, temperature, humidity, city },
+#     agent: "0x...", accessMode: "free (agentkit)" }
+
+@agentkitHeader = eyJkb21haW4iOiJsb2NhbGhvc3QiLCJ1cmkiOiJodHRwOi8vbG9jYWxob3N0OjMwMDEvYXBpL3dlYXRoZXIiLCJ2ZXJzaW9uIjoiMSIsIm5vbmNlIjoiOTIxNDFjYWRmMWNlNmIwOWJlMmY5YTA4Y2ZiMzM5ZjEiLCJpc3N1ZWRBdCI6IjIwMjYtMDQtMDVUMDM6NDE6NDEuMjU3WiIsInN0YXRlbWVudCI6IlZlcmlmeSB5b3VyIGFnZW50IGlzIGJhY2tlZCBieSBhIHJlYWwgaHVtYW4iLCJyZXNvdXJjZXMiOlsiaHR0cDovL2xvY2FsaG9zdDozMDAxL2FwaS93ZWF0aGVyIl0sImFkZHJlc3MiOiIweGU2QUExQjYwYzRFQzc2MDY2OGRCM0MwNmQ3QTg5NGM1RmQzOUQwYWEiLCJjaGFpbklkIjoiZWlwMTU1OjQ4MCIsInR5cGUiOiJlaXAxOTEiLCJzaWduYXR1cmUiOiIweDE3MTk5NzRiMTdkODNhMTVjMWExZjVlNTQxZTYyMWVhZWM0NjU5MGFjOTkwZjQ1MTBiOGEwMTNmOGI0MDU0Yjg2Y2YzNjI4YjQ4NGM3ZDZhZTJmM2U3NTZjZDE4N2FjZjRjZjA5ZWYxZGM1N2JlN2M3ODdmMWU1OGM2NTM3ZjJkMWMifQ==
+
+GET {{baseUrl}}/api/weather
+Accept: application/json
+agentkit: {{agentkitHeader}}
+
+
+# ============================================================
+# 3. デモ用ステップエンドポイント（サーバー内部でフローを実行）
+# ============================================================
+
+### 3-1. Step 1 — 402 レスポンスの詳細を表示
+# agentkit チャレンジの構造（nonce, domain, supportedChains, mode 等）を確認する
+# 期待レスポンス: { step: 1, httpStatus: 402, response: { ... } }
+GET {{baseUrl}}/api/demo/step1
+Accept: application/json
+
+
+### 3-2. Step 2 — SIWE 署名フローの詳細を表示
+# サーバー内部でエージェントがどのように署名するかを確認する
+# 期待レスポンス:
+#   { step: 2, agentWallet, siweMessage, signaturePreview, steps: [...] }
+GET {{baseUrl}}/api/demo/step2
+Accept: application/json
+
+
+### 3-3. Step 3 — AgentKit 認証後のリソース取得
+# フロー全体を通して天気データが返ることを確認する
+# 期待レスポンス:
+#   { step: 3, success: true, data: { weather, temperature, humidity, city },
+#     agent, humanId, accessMode }
+GET {{baseUrl}}/api/demo/step3
+Accept: application/json
+
+
+# ============================================================
+# 4. 連続リクエスト（nonce の使い捨て確認）
+# ============================================================
+
+### 4-1. 同じ agentkit ヘッダーを 2 回送信 → 2 回目はタイムスタンプ期限切れになることを確認
+# ※ サーバーは issuedAt が 5 分以内かをチェックするが、
+#    同一 nonce の再利用は SKIP_AGENT_BOOK=true 環境では検出されない。
+#    本番（SKIP_AGENT_BOOK=false）では AgentBook 側で管理される。
+GET {{baseUrl}}/api/weather
+Accept: application/json
+agentkit: {{agentkitHeader}}
