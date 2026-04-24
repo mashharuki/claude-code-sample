@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "ai-wallet-refinement-baseline",
+  "prompt": "ETH Globalで「自然言語で指示するだけでDeFi操作（スワップ・流動性提供）を自動実行するAI Agentウォレット」というアイデアを考えています。過去の類似受賞作との差別化ポイントと、このアイデアをブラッシュアップするための具体的な提案をしてください。スコアリングもお願いします。",
+  "assertions": []
+}

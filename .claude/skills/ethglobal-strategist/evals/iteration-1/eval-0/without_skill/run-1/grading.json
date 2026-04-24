@@ -1,0 +1,40 @@
+{
+  "eval_id": 0,
+  "run": "without_skill",
+  "expectations": [
+    {
+      "text": "5つのアイデア案が含まれている",
+      "passed": true,
+      "evidence": "AIエージェントDeFi、分散型評判スコア、Intent送金、ZK投票、RWA投資の5案あり"
+    },
+    {
+      "text": "スポンサー賞が各アイデアに明記されている",
+      "passed": true,
+      "evidence": "各アイデアにスポンサー名が記載（Coinbase/Base、Uniswap、Chainlink等）。ただし賞金額の明記なし"
+    },
+    {
+      "text": "2025年トレンドが反映されている",
+      "passed": true,
+      "evidence": "AI×Web3、ERC-4337、クロスチェーン、Intent-based DeFi、ZK Proofが挙げられている"
+    },
+    {
+      "text": "技術スタックが言及されている",
+      "passed": true,
+      "evidence": "各アイデアにNext.js、Solidity、Uniswap v4、AI APIなどが記載されている"
+    },
+    {
+      "text": "スコープが36時間以内で実現可能",
+      "passed": false,
+      "evidence": "「48〜72時間」という記載があるがタイムライン詳細なし。スコープの実現可能性についての詳細検討が不足"
+    }
+  ],
+  "pass_count": 4,
+  "total_count": 5,
+  "pass_rate": 0.8,
+  "summary": {
+    "pass_rate": 0.8,
+    "passed": 4,
+    "failed": 1,
+    "total": 5
+  }
+}

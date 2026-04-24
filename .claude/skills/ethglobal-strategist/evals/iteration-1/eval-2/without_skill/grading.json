@@ -1,0 +1,34 @@
+{
+  "eval_id": 2,
+  "run": "without_skill",
+  "expectations": [
+    {
+      "text": "避けるべきカテゴリが2つ以上挙げられている",
+      "passed": true,
+      "evidence": "汎用DeFiプロトコル、NFTマーケット、基本トークン発行、薄いAI×Web3統合、DAOツール — 5カテゴリを挙げている"
+    },
+    {
+      "text": "狙い目ニッチが2つ以上挙げられている",
+      "passed": true,
+      "evidence": "AI Agent×オンチェーン経済、インテントベースUX、ZK Proof×プライバシー、クロスチェーン抽象化、DePIN、RWA、SocialFi — 7ニッチ（ただし詳細説明は薄め）"
+    },
+    {
+      "text": "Chainlink固有技術への言及がある",
+      "passed": true,
+      "evidence": "Functions、Data Feeds、CCIP、Automationが言及されているが、具体的なアーキテクチャ例や「三位一体」戦略の詳細は浅い"
+    },
+    {
+      "text": "Base固有のアプローチが示されている",
+      "passed": true,
+      "evidence": "Smart Wallet、ERC-4337、Paymaster、AgentKit、Basenames、Farcaster Framesが言及されている"
+    },
+    {
+      "text": "具体的なプロダクト例が示されている",
+      "passed": false,
+      "evidence": "Chainlink賞向けに「AI AgentとChainlink Automationを組み合わせたフルループ」とあるが具体的なプロダクト名・ユースケースが記載されていない。Baseはフルログイン的な説明のみ"
+    }
+  ],
+  "pass_count": 4,
+  "total_count": 5,
+  "pass_rate": 0.8
+}

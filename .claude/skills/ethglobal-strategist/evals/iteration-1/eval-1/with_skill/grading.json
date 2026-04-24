@@ -1,0 +1,34 @@
+{
+  "eval_id": 1,
+  "run": "with_skill",
+  "expectations": [
+    {
+      "text": "5軸スコアリングが含まれている",
+      "passed": true,
+      "evidence": "インパクト4/5、技術革新性2/5、UX3/5、実現性4/5、賞金獲得可能性2/5 — 合計15/25点の詳細スコアリングあり"
+    },
+    {
+      "text": "過去類似作との比較がある",
+      "passed": true,
+      "evidence": "Orchestra（★★★★★）、maki（★★★★☆）、Aiwal（★★★★☆）など6件の競合プロジェクトを類似度星付きで比較"
+    },
+    {
+      "text": "弱点の指摘がある",
+      "passed": true,
+      "evidence": "「Orchestraがすでにやっている」「このままではn番煎じと判定される」という率直な弱点指摘あり"
+    },
+    {
+      "text": "具体的な改善提案がある",
+      "passed": true,
+      "evidence": "案A（Human-in-the-Loop）、案B（クロスチェーン収益最適化特化）、案C（ZK Agent）の3案で技術スタック・Wow Momentまで具体的に提案"
+    },
+    {
+      "text": "スコアアップのための次のステップが示されている",
+      "passed": true,
+      "evidence": "改善後スコア19/25（+4点）の予測と「World ID追加で20点到達」という具体的な次の一手が明示"
+    }
+  ],
+  "pass_count": 5,
+  "total_count": 5,
+  "pass_rate": 1.0
+}

@@ -1,0 +1,40 @@
+{
+  "eval_id": 1,
+  "run": "without_skill",
+  "expectations": [
+    {
+      "text": "5軸スコアリングが含まれている",
+      "passed": false,
+      "evidence": "「総合スコア 4.6/10」と「入賞可能性 低〜中」という総合評価はあるが、スキルで定義した5軸（インパクト/技術革新性/UX/実現性/賞金獲得可能性）の個別スコアがない"
+    },
+    {
+      "text": "過去類似作との比較がある",
+      "passed": true,
+      "evidence": "Brianknows.org（ETH Global 2023受賞）、Coinbase AgentKit、LangChain+Uniswapが競合として言及されている"
+    },
+    {
+      "text": "弱点の指摘がある",
+      "passed": true,
+      "evidence": "「技術的参入障壁が低い状態」「Coinbase AgentKitやLangChain+UniswapはOSS化されている」という弱点指摘あり"
+    },
+    {
+      "text": "具体的な改善提案がある",
+      "passed": true,
+      "evidence": "リスク管理AIレイヤー、マルチステップ条件実行、クロスチェーン対応、Explainable DeFiの4つの差別化ポイントあり"
+    },
+    {
+      "text": "スコアアップのための次のステップが示されている",
+      "passed": false,
+      "evidence": "「推奨アーキテクチャ」でUniswap v4 Hooks + AgentKit + Gelatoが示されているが、「次の3ステップ」という形での優先度付きアクションプランがない"
+    }
+  ],
+  "pass_count": 3,
+  "total_count": 5,
+  "pass_rate": 0.6,
+  "summary": {
+    "pass_rate": 0.6,
+    "passed": 3,
+    "failed": 2,
+    "total": 5
+  }
+}

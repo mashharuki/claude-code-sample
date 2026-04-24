@@ -1,0 +1,34 @@
+{
+  "eval_id": 2,
+  "run": "with_skill",
+  "expectations": [
+    {
+      "text": "避けるべきカテゴリが2つ以上挙げられている",
+      "passed": true,
+      "evidence": "汎用NFTマーケット、DAOツール、DEXクローン、単体ウォレットUI、「AIチャットボット+Web3」の安易な実装、「将来的には〜」型デモ — 6カテゴリを具体的に挙げている"
+    },
+    {
+      "text": "狙い目ニッチが2つ以上挙げられている",
+      "passed": true,
+      "evidence": "TEE×AI Agent検証、Agent-to-Agent Commerce（ERC-8004/8183）、ZKプライバシー信用スコア、コンプライアンス×DeFi、クリエイター×マイクロペイメント — 5ニッチを詳細に説明"
+    },
+    {
+      "text": "Chainlink固有技術への言及がある",
+      "passed": true,
+      "evidence": "CCIP、Data Feeds / Price Feeds、Automation（Keepers）、Functions（外部API連携）、VRF v2.5 が具体的な活用方法と共に言及"
+    },
+    {
+      "text": "Base固有のアプローチが示されている",
+      "passed": true,
+      "evidence": "Smart Wallet（ERC-4337）、Paymaster、AgentKit、OnchainKit、Basename、USDC on Baseが具体的な戦略として示されている"
+    },
+    {
+      "text": "具体的なプロダクト例が示されている",
+      "passed": true,
+      "evidence": "「AI財務エージェント for 個人事業主」がChainlink Functions×Automation + Base Smart Wallet×USDCのダブル受賞アイデアとして具体的に提示"
+    }
+  ],
+  "pass_count": 5,
+  "total_count": 5,
+  "pass_rate": 1.0
+}

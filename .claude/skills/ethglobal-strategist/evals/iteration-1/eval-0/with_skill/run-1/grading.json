@@ -1,0 +1,40 @@
+{
+  "eval_id": 0,
+  "run": "with_skill",
+  "expectations": [
+    {
+      "text": "5つのアイデア案が含まれている",
+      "passed": true,
+      "evidence": "IntentPay, AgentVault, ZKCredit, MeshWork, PredictChain の5案が明確に提示されている"
+    },
+    {
+      "text": "スポンサー賞が各アイデアに明記されている",
+      "passed": true,
+      "evidence": "各アイデアにスポンサー名と賞金額($20,000)・理由が表形式で明記されている（例: Chainlink、World、LayerZeroなど）"
+    },
+    {
+      "text": "2025年トレンドが反映されている",
+      "passed": true,
+      "evidence": "AI Agent インフラ、Agentic Commerce、Human Verification × Agent など2025-2026の最新トレンドをETH Global Showcaseライブデータから反映"
+    },
+    {
+      "text": "技術スタックが言及されている",
+      "passed": true,
+      "evidence": "各アイデアにNext.js + wagmi、Chainlink CCIP、World ID MiniKit、Hardhatなど具体的な技術が記載"
+    },
+    {
+      "text": "スコープが36時間以内で実現可能",
+      "passed": true,
+      "evidence": "36時間タイムライン（0-4h: アイデア確定, 4-8h: コアSC実装...）が明示され、ZKCreditの実現性に関する注意書きもある"
+    }
+  ],
+  "pass_count": 5,
+  "total_count": 5,
+  "pass_rate": 1.0,
+  "summary": {
+    "pass_rate": 1.0,
+    "passed": 5,
+    "failed": 0,
+    "total": 5
+  }
+}
