@@ -418,7 +418,7 @@ style: |
 ## 設計も実装もプレゼンも、全部ひとりでやりきる。<br>それが AI SOLO HACKATHON です。
 
 <div class="highlight">
-🎯 スポンサー様へ：<strong>AIを実践的に使いこなす開発者と直接つながれる貴重な機会です</strong>
+🎯 OpenAI 様へ：<strong>AIを最も深く使いこなす日本の開発者たちと直接つながれる貴重な機会です</strong>
 </div>
 
 ---
@@ -525,6 +525,43 @@ AIを使うのは当然。<br>**何を作るか**、**どう設計するか**、
 ### 🎯 評価の本質
 
 完成したプロダクトだけでなく、<br>**設計の思想と判断力**を評価する
+
+</div>
+
+</div>
+</div>
+
+---
+
+## 2026年テーマ：**「AIを武器に、一人で世界を動かせ。」**
+
+<div class="highlight">
+⚡ <strong>強い人が、ワクワクして集まってくるようなハッカソンにします！</strong>
+</div>
+
+<div class="columns">
+<div>
+
+### このテーマが伝えること
+
+- AIは補助ツールではなく、**あなたの武器**
+- **真の個人の地力**が問われる
+
+</div>
+<div>
+
+<div class="card accent">
+
+### 🔥 強者が集まる理由
+
+「AIを武器に」
+  - **使いこなす自信がある人**が反応する 
+
+「一人で」
+  -  **自分の実力を証明したい人**が来る  
+
+「世界を動かせ」
+  - **本気で変えようとしている人**が来る
 
 </div>
 
@@ -761,21 +798,16 @@ Phase 2 ファイナリスト
 
 <!-- _class: lead -->
 
-# 商品について
+# 賞品について
 
-## 調整中ですが、案として以下のような内容を想定
+## 一案ですが以下のような内容であれば強者が多く集うと考えています。
 
-<div class="columns col-2" style="margin-top:24px">
+<br/>
+<div style="margin-top:24px">
 <div style="text-align:center">
 <span class="number">🏆</span>
 
-**最優秀賞**<br><small>OpenAI Dev Day（SF）<br>招待 + 渡航費サポート<br>（スポンサー次第・上記は例です）</small>
-</div>
-<div style="text-align:center">
-<span class="number warm">🥈</span>
-
-
-**特別賞**<br><small>スポンサー各社から<br>特別賞・クーポン・<br>製品提供など</small>
+**最優秀賞**<br><small>OpenAI Dev Day（SF）<br>招待 + 渡航費サポート</small>
 </div>
 </div>
 
@@ -783,9 +815,9 @@ Phase 2 ファイナリスト
 
 <!-- _class: section -->
 
-## 03　スポンサーの皆さまへ
+## 03　OpenAI 様へのご提案
 
-AI開発者コミュニティへの最短距離
+日本最大のAI開発者コミュニティと、一緒に歴史を作りませんか
 
 ---
 
@@ -810,50 +842,50 @@ AIで実際に手を動かしている開発者が集まります。ファイナ
 
 ---
 
-## **スポンサープランにつきまして**
+## OpenAI 様へのご提案
 
-<div class="columns col-3">
+<div class="columns">
+<div class="card success">
+
+### ✅ 運営側で準備するもの
+
+- **会場**（東京都内・確保済み）
+- 運営・告知・審査員手配
+- SNS / Zenn / note での発信・拡散
+
+</div>
 <div class="card accent">
 
-### 🥇 GOLD スポンサー
+### 🎁 OpenAI様にお願いしたいこと
 
-- 登壇 **15分** 枠
-- 全媒体へロゴ掲載
-- **賞品への社名冠**（命名権）
-
-<span class="tag">詳細はご相談</span>
-
-</div>
-<div class="card warn">
-
-### 🥈 SILVER スポンサーs
-
-- スポンサー紹介 **5分** 枠
-- 全媒体へロゴ掲載
-- ノベルティ・資料配布
-- SNS・告知での協賛クレジット
-
-<span class="tag warm">詳細はご相談</span>
-
-</div>
-<div class="card" style="border-left:4px solid #94a3b8; background:rgba(148,163,184,0.04)">
-
-### 🥉 BRONZE スポンサー
-
-- 全媒体へロゴ掲載
-- SNS・告知での協賛クレジット
-
-<span class="tag outline">詳細はご相談</span>
+- **最優秀賞の景品**  
+  <small>例：OpenAI Dev Day（SF）招待 + 渡航費</small>
+- **懇親会のご協賛**  
+  <small>ファイナリスト〜30名 <br/> オフライン観覧者 〜100名</small>
 
 </div>
 </div>
 
-<div class="card success" style="margin-top:14px; padding:10px 22px;">
+<div class="card warn" style="margin-top:14px">
 
-### 🎁 現物協賛も歓迎します &nbsp;<span class="tag success">歓迎</span>
+### 💡 OpenAI 様にとっての価値
 
-賞品・グッズ、クーポン・ライセンスの提供など。媒体掲載とSNSでの感謝投稿でお返しします。
+日本最大の AI 駆動開発コミュニティ **21,163名超** への直接接点。<br/>Codex等を実際に使い込んでいる開発者たちと懇親会でカジュアルに話せる貴重な機会です。
 
+</div>
+
+---
+
+## OpenAI様から見た投資対効果
+
+| 提供内容 | 得られるもの |
+|---|---|
+| 最優秀賞（Dev Day招待等） | 最優秀者のSNS発信・受賞記事が自然に拡散 |
+| 懇親会スポンサー | ファイナリスト〜30名と直接交流・採用接点 |
+| ブランド冠スポンサー | 「OpenAI公認ハッカソン」として全告知に掲出 |
+
+<div class="highlight">
+🌏 最優秀者がOpenAI提供の賞でSFへ<br/>その熱が日本の開発者コミュニティ全体に広がっていきます
 </div>
 
 ---
@@ -869,12 +901,12 @@ AIで実際に手を動かしている開発者が集まります。ファイナ
 | AI駆動開発カンファレンス | 2026年7月開催の大型イベントで公式告知 |
 
 <div class="highlight">
-🌏 最優秀者がスポンサー提供の賞で海外カンファレンスへ—<br/>その様子がそのまま広がっていきます
+🌏 最優秀者がスポンサー提供の賞で海外カンファレンスへ<br/>その様子がそのまま広がっていきます
 </div>
 
 ---
 
-## 6月中にスポンサーを確定したい——7月の告知に間に合わせるために
+## タイムスケジュール感
 
 **スポンサー募集・準備フェーズ（現在〜2026年6月）**
 <div class="progress"><div class="progress-bar" style="width:15%"></div></div>
