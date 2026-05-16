@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "skill_name": "cfp-strategist",
+    "skill_path": "/Users/harukikondo/git/claude-code-sample/.claude/skills/cfp-strategist",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-05-15T00:00:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "theme-selection-from-scratch",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 85.2,
+        "tokens": 22527,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "5軸の評価フレームワーク（熱量・新規性・実用性・普遍性・テーマ適合性のうち少なくとも3軸）に言及しているか", "passed": true, "evidence": "全5軸が各テーマ候補の評価表に明示されている"},
+        {"text": "具体的なテーマ候補が2件以上提示されているか", "passed": true, "evidence": "5つのテーマ候補（A〜E）が提示されている"},
+        {"text": "PHPerKaigiまたはPHPコミュニティとのテーマ適合性に言及しているか", "passed": true, "evidence": "各テーマ候補のテーマ適合性評価コメントで明記"},
+        {"text": "マイクロサービス化プロジェクトの経験を活かした具体的な提案をしているか", "passed": true, "evidence": "5候補すべてがマイクロサービス×PHP/Laravel経験を直接活かしたテーマ"},
+        {"text": "スコアリング・評価・点数付けなど定量的な判断軸が含まれているか", "passed": true, "evidence": "23/25点、22/25点等の定量評価とスコアリングまとめ表（順位表）が含まれている"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "theme-selection-from-scratch",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 47.2,
+        "tokens": 14818,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "5軸の評価フレームワーク（熱量・新規性・実用性・普遍性・テーマ適合性のうち少なくとも3軸）に言及しているか", "passed": false, "evidence": "CFPのポイント4項目は書いているが5軸フレームワークは使われていない"},
+        {"text": "具体的なテーマ候補が2件以上提示されているか", "passed": true, "evidence": "4つのテーマ候補が提示されている"},
+        {"text": "PHPerKaigiまたはPHPコミュニティとのテーマ適合性に言及しているか", "passed": true, "evidence": "PHPコミュニティへの適合性に言及"},
+        {"text": "マイクロサービス化プロジェクトの経験を活かした具体的な提案をしているか", "passed": true, "evidence": "全4候補がマイクロサービス化の現場体験に基づく"},
+        {"text": "スコアリング・評価・点数付けなど定量的な判断軸が含まれているか", "passed": false, "evidence": "定量的スコアリングなし。「最も採択されやすい」という定性ラベルはあるが数値化なし"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "cfp-creation-from-theme",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 97.2,
+        "tokens": 22643,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "タイトル候補が3案以上提示されているか", "passed": true, "evidence": "5案提示（知見共有型×数字・課題解決型・動詞構造型・問いかけ型・シンプル実録型）"},
+        {"text": "「〜して〜する」「〜で〜を実現する」などの動詞構造型タイトルが少なくとも1案含まれているか", "passed": true, "evidence": "案3が明示的に「動詞構造型」ラベル付きで提示されている"},
+        {"text": "アブストラクトが10行以上（または300文字以上）の十分な長さを持っているか", "passed": true, "evidence": "SPRO構造で20行以上・600文字以上のアブストラクト"},
+        {"text": "25分の時間配分（アジェンダ）が記載されているか", "passed": true, "evidence": "詳細な時間配分テーブル（開始時刻・所要時間・内容・詳細）が提供"},
+        {"text": "想定聴衆レベル（初心者/中級者/上級者のいずれか）が明記されているか", "passed": true, "evidence": "「入門知識は前提、実践レベルの話をします」と明記"},
+        {"text": "背景・問題・解決策・聴衆へのメリットがアブストラクトに含まれているか（SPRO構造）", "passed": true, "evidence": "S/P/R/Oが明示的にラベル付けされたブロック構造で提示"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "cfp-creation-from-theme",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.667,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 45.8,
+        "tokens": 14909,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "タイトル候補が3案以上提示されているか", "passed": false, "evidence": "1案のみ提示（副題はあるが代替タイトル案なし）"},
+        {"text": "「〜して〜する」「〜で〜を実現する」などの動詞構造型タイトルが少なくとも1案含まれているか", "passed": false, "evidence": "提示タイトルは名詞型・形容詞型（動詞構造ではない）"},
+        {"text": "アブストラクトが10行以上（または300文字以上）の十分な長さを持っているか", "passed": true, "evidence": "アブストラクト本文3段落＋詳細セクションで十分な長さ"},
+        {"text": "25分の時間配分（アジェンダ）が記載されているか", "passed": true, "evidence": "0〜25分の時間配分テーブルが記載"},
+        {"text": "想定聴衆レベル（初心者/中級者/上級者のいずれか）が明記されているか", "passed": true, "evidence": "「前提知識: Kubernetesの基本的な概念を理解していること」と明記"},
+        {"text": "背景・問題・解決策・聴衆へのメリットがアブストラクトに含まれているか（SPRO構造）", "passed": true, "evidence": "SPRO要素は暗黙的に含まれているが明示的ラベルなし"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "cfp-review-and-improvement",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 119.4,
+        "tokens": 23901,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "7軸または複数軸の採点ルーブリックで採点し、数値スコアが示されているか（〇〇/35点 または 軸ごとの点数）", "passed": true, "evidence": "7軸採点表で各1〜5点・総合9/35点と判定が明示"},
+        {"text": "「〜する予定です」という未確定表現がアンチパターンとして指摘されているか", "passed": true, "evidence": "「今後はより良いGCを実装する予定です」の具体的引用で指摘"},
+        {"text": "記述量の少なさ（概要が短すぎること）が問題として指摘されているか", "passed": true, "evidence": "「4行程度しかなく、10行未満。最低10行が必要」と明示"},
+        {"text": "改善後のタイトル案が1案以上提示されているか", "passed": true, "evidence": "動詞構造型・課題解決型・問いかけ型等5案提示"},
+        {"text": "改善後のアブストラクト全文（10行以上）が提供されているか", "passed": true, "evidence": "SPRO構造で25行以上・800文字超の全文リライトが提供"},
+        {"text": "優先度付き（最重要・重要・推奨など）の改善提案が含まれているか", "passed": true, "evidence": "[最重要][重要][重要][推奨][推奨]で優先度付き5件の改善提案"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "cfp-review-and-improvement",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 3,
+        "failed": 3,
+        "total": 6,
+        "time_seconds": 54.7,
+        "tokens": 15071,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "7軸または複数軸の採点ルーブリックで採点し、数値スコアが示されているか（〇〇/35点 または 軸ごとの点数）", "passed": false, "evidence": "定量的採点ルーブリックなし。チェックリスト形式で列挙のみ"},
+        {"text": "「〜する予定です」という未確定表現がアンチパターンとして指摘されているか", "passed": true, "evidence": "「思います」「予定」等の表現が問題として指摘されている"},
+        {"text": "記述量の少なさ（概要が短すぎること）が問題として指摘されているか", "passed": false, "evidence": "「具体性がない」という質的指摘はあるが、行数・文量への定量的言及なし"},
+        {"text": "改善後のタイトル案が1案以上提示されているか", "passed": true, "evidence": "英語タイトル案3件提示"},
+        {"text": "改善後のアブストラクト全文（10行以上）が提供されているか", "passed": true, "evidence": "英語での全文リライト案（15行以上）が提供"},
+        {"text": "優先度付き（最重要・重要・推奨など）の改善提案が含まれているか", "passed": false, "evidence": "問題点はフラットに列挙。チェックリストも優先度づけなし"}
+      ],
+      "notes": []
+    }
+  ],
+
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 100.6, "stddev": 14.2, "min": 85.2, "max": 119.4},
+      "tokens": {"mean": 23024, "stddev": 622, "min": 22527, "max": 23901}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.589, "stddev": 0.069, "min": 0.5, "max": 0.667},
+      "time_seconds": {"mean": 49.2, "stddev": 3.9, "min": 45.8, "max": 54.7},
+      "tokens": {"mean": 14933, "stddev": 105, "min": 14818, "max": 15071}
+    },
+    "delta": {
+      "pass_rate": "+0.41",
+      "time_seconds": "+51.4",
+      "tokens": "+8091"
+    }
+  },
+
+  "notes": [
+    "スキルありが全eval（3/3）で100%通過、スキルなしは平均59%。41ポイントの大幅改善",
+    "テーマ選定（eval-1）での最大差別化：5軸定量スコアリングはスキルありのみ実施",
+    "CFP作成（eval-2）での差別化：スキルありはタイトル候補5案・動詞構造型ラベル・SPRO明示。スキルなしは1案のみ",
+    "CFPレビュー（eval-3）での差別化：スキルありは7軸/35点採点・12項目チェックリスト・優先度付き改善案。スキルなしは定性的指摘のみ",
+    "スキルありの実行時間はスキルなしより約2倍（+51.4秒）、トークンも約1.5倍（+8091）かかるが、品質・構造・網羅性が大幅に向上",
+    "eval-2のwithout_skillが相対的に高得点（67%）なのは、このユーザーケース（テーマ明確・25分指定）がタスク要件を絞りやすいため。スキルなしでも基本的なCFP作成は可能だが、タイトル複数案・動詞構造型・SPRO明示には至らない"
+  ]
+}

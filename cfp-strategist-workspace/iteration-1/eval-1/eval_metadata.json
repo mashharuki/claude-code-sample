@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "theme-selection-from-scratch",
+  "prompt": "来月PHPerKaigiのCFP締切があるんですけど、何を話せばいいか全然思いつかなくて困ってます。バックエンドエンジニアで今はPHP/Laravelを3年くらい使ってて、最近マイクロサービス化のプロジェクトに参加してるんですが、ネタになりますかね？",
+  "assertions": [
+    {
+      "text": "5軸の評価フレームワーク（熱量・新規性・実用性・普遍性・テーマ適合性のうち少なくとも3軸）に言及しているか",
+      "type": "contains_concept"
+    },
+    {
+      "text": "具体的なテーマ候補が2件以上提示されているか",
+      "type": "count_check"
+    },
+    {
+      "text": "PHPerKaigiまたはPHPコミュニティとのテーマ適合性に言及しているか",
+      "type": "contains_concept"
+    },
+    {
+      "text": "マイクロサービス化プロジェクトの経験を活かした具体的な提案をしているか",
+      "type": "contains_concept"
+    },
+    {
+      "text": "スコアリング・評価・点数付けなど定量的な判断軸が含まれているか",
+      "type": "contains_concept"
+    }
+  ]
+}
