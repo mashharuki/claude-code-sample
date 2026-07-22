@@ -25,12 +25,11 @@
       "args": ["@drawio/mcp@latest"]
     },
     "serena": {
-      "command": "uvx",
+      "type": "stdio",
+      "command": "serena",
       "args": [
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server"
+        "start-mcp-server",
+        "--context=jb-copilot-plugin"
       ]
     },
     "codegraph": {
