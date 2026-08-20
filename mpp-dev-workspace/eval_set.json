@@ -1,0 +1,22 @@
+[
+  {"query": "うちのExpressサーバーに`mppx`でTempo決済を組み込んで、1リクエストごとに$0.01課金したいんだけど、compose()でStripeのカード決済も同時に受け付けられるようにしたい。どう実装すればいい？", "should_trigger": true},
+  {"query": "I want my API to return a 402 with a WWW-Authenticate: Payment header when someone hits /api/data without paying, and I don't want to hand-roll the HMAC challenge-id binding myself — is there a library/SDK that does the challenge/credential dance for me?", "should_trigger": true},
+  {"query": "I have an MCP server built with @modelcontextprotocol/sdk and I want the get_premium_data tool to require payment before it runs, ideally using whatever the standard -32042 error code convention is for payment-gated MCP tools.", "should_trigger": true},
+  {"query": "I'm building a coding agent that needs to autonomously pay per API call for a web-search tool. I heard Stripe and Tempo co-authored a newer open payment standard for this kind of agentic payment, similar in spirit to x402 — can you help wire that up?", "should_trigger": true},
+  {"query": "can you review my payment endpoint's challenge/credential verification logic in server.ts for replay vulnerabilities? I'm worried the nonce doesn't actually bind to the challenge id and someone could reuse a signed credential", "should_trigger": true},
+  {"query": "just found this npm package called mppx, how do I use it to charge for api calls in my hono app? never used it before", "should_trigger": true},
+  {"query": "決済手段としてTempoネイティブのチャージとStripeのカード決済、どっちの方がガス代を気にせず使えますか？あとPermit2とEIP-3009って何が違うんですか？", "should_trigger": true},
+  {"query": "write vitest tests for my mppx server integration — I need to cover replay protection, expired challenge handling, and the insufficient-amount case", "should_trigger": true},
+  {"query": "we already have x402 clients paying our API in production (using @x402/express on Base Sepolia). Product wants us to also support MPP without breaking the existing x402 integration — is that even possible on the same route?", "should_trigger": true},
+  {"query": "how do I set up a GET /openapi.json endpoint with an x-payment-info extension so agents can discover pricing on my mppx-powered API before they even hit the paid route?", "should_trigger": true},
+  {"query": "I want to add x402 middleware to my Express API using @x402/express and accept USDC on Base Sepolia — walk me through the setup, facilitator config, and route pricing.", "should_trigger": false},
+  {"query": "How do I set up a Stripe Checkout session for a one-time $20 purchase on my Next.js e-commerce site? just need redirect-based checkout, no subscriptions.", "should_trigger": false},
+  {"query": "What HTTP status code should I return when a resource has been permanently removed vs when it needs a subscription upgrade? trying to decide between 410 and 402 for my SaaS app, nothing to do with any payment protocol library.", "should_trigger": false},
+  {"query": "I want to build an MCP server that exposes my Postgres database as read-only tools for Claude to query — how do I set that up with the TypeScript MCP SDK? no payments involved.", "should_trigger": false},
+  {"query": "Building an agent with the Vercel AI SDK that calls multiple tools in sequence — how do I handle tool call retries and backoff when one of the tool calls fails?", "should_trigger": false},
+  {"query": "How do I sign an EIP-712 typed data message with viem for a generic NFT marketplace listing? just need the domain/types/message shape, unrelated to any payment protocol.", "should_trigger": false},
+  {"query": "I run a SaaS with monthly subscriptions billed via Stripe — how do I handle failed payment retries and dunning emails when a card declines?", "should_trigger": false},
+  {"query": "Can you help me design a nicer checkout form UI with Tailwind for my e-commerce site? just the visual layout, card fields, button states.", "should_trigger": false},
+  {"query": "I'm building a metronome app for musicians — how do I let users adjust the tempo (BPM) smoothly with a slider and have the click track update in real time?", "should_trigger": false},
+  {"query": "What's the difference between JSON-RPC and gRPC for my internal microservices? just picking a communication protocol between two backend services, nothing about agents or payments.", "should_trigger": false}
+]
