@@ -14,6 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 from dio import AWS, GENERIC, GROUPS, Diagram, EDGE_STYLE, EDGE_STYLE_BOLD  # noqa: E402
+import web3icons as w3  # noqa: E402
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "templates")
 
@@ -611,7 +612,7 @@ def build_dapp_fullstack() -> Diagram:
     d.text("Full-Stack dApp Architecture", 40, 20, 700, 30)
 
     user = d.node("User", AWS["user"], 40, 220, 60, 70)
-    wallet = d.node("Wallet\n(MetaMask等)", GENERIC["wallet"], 200, 210, 70, 90)
+    wallet = d.node("MetaMask\n(Wallet)", w3.wallet("metamask"), 200, 210, 60, 60)
     frontend = d.node("Frontend\n(React/Next.js)", GENERIC["box"], 340, 220, 160, 70)
     cdn = d.node("CDN / Hosting\n(CloudFront, Vercel等)", AWS["cloudfront"], 340, 60, ICON, ICON)
     rpc = d.node("RPC Provider\n(Alchemy/Infura等)", GENERIC["box_purple"], 560, 220, 160, 70)
@@ -663,15 +664,17 @@ def build_cross_chain_bridge() -> Diagram:
     d = Diagram(width=1600, height=520)
     d.text("Cross-Chain Bridge Architecture", 40, 20, 700, 30)
 
-    chainA = d.container("Chain A", GROUPS["generic"], 40, 100, 360, 300)
-    lockContract = d.node("Lock/Burn\nContract", GENERIC["smart_contract"], 130, 100, 90, 90, parent=chainA)
+    chainA = d.container("Chain A: Ethereum", GROUPS["generic"], 40, 100, 360, 300)
+    chainA_logo = d.node("Ethereum", w3.network("ethereum"), 40, 100, 50, 50, parent=chainA)
+    lockContract = d.node("Lock/Burn\nContract", GENERIC["smart_contract"], 150, 100, 90, 90, parent=chainA)
 
     relayers = d.container("Relayer / Oracle Network\n(署名の集約・検証)", GROUPS["tenant"], 500, 100, 500, 300)
     for i in range(3):
         d.node(f"Relayer #{i+1}", GENERIC["box_orange"], 40 + i * 150, 100, 120, 80, parent=relayers)
 
-    chainB = d.container("Chain B", GROUPS["generic"], 1100, 100, 360, 300)
-    mintContract = d.node("Mint/Release\nContract", GENERIC["smart_contract"], 130, 100, 90, 90, parent=chainB)
+    chainB = d.container("Chain B: Base", GROUPS["generic"], 1100, 100, 360, 300)
+    chainB_logo = d.node("Base", w3.network("base"), 40, 100, 50, 50, parent=chainB)
+    mintContract = d.node("Mint/Release\nContract", GENERIC["smart_contract"], 150, 100, 90, 90, parent=chainB)
 
     monitor = d.node("監視 / 不正検知\n(異常な引き出しをブロック)", GENERIC["box_gray"], 500, 440, 500, 60)
 
@@ -790,7 +793,7 @@ def build_x402_agentic_payments() -> Diagram:
     d.text("x402 Agentic Payments (HTTP 402 Protocol)", 40, 20, 900, 30)
 
     agent = d.node("AI Agent\n(x402 Client / Buyer)", GENERIC["box_purple"], 40, 220, 160, 80)
-    wallet = d.node("Wallet", GENERIC["wallet"], 240, 215, 70, 90)
+    wallet = d.node("Wallet", w3.wallet("metamask"), 250, 225, 60, 60)
     server = d.node("Server / API\n(x402 Seller Middleware)", GENERIC["box"], 440, 220, 200, 80)
     facilitator = d.node("Facilitator\n(/verify, /settle)", GENERIC["box_orange"], 700, 220, 200, 80)
     chain = d.node("Blockchain\n(USDC決済, Base/Solana)", GENERIC["smart_contract"], 960, 215, 100, 100)
@@ -814,13 +817,13 @@ def build_dex_amm() -> Diagram:
     d.text("Decentralized Exchange (DEX) - AMM Architecture", 40, 20, 900, 30)
 
     trader = d.node("Trader", AWS["user"], 40, 230, 60, 70)
-    wallet = d.node("Wallet", GENERIC["wallet"], 180, 220, 70, 90)
+    wallet = d.node("Wallet", w3.wallet("metamask"), 190, 235, 60, 60)
     frontend = d.node("Frontend\n(Swap UI)", GENERIC["box"], 320, 230, 160, 70)
     router = d.node("Router Contract\n(最適経路探索)", GENERIC["smart_contract"], 560, 220, 110, 100)
 
     pools = d.container("Liquidity Pools (AMM, x*y=k)", GROUPS["generic"], 740, 80, 340, 320)
-    pool1 = d.node("Pool: TOKEN-A/TOKEN-B", GENERIC["box_orange"], 40, 60, 260, 70, parent=pools)
-    pool2 = d.node("Pool: TOKEN-B/TOKEN-C", GENERIC["box_orange"], 40, 180, 260, 70, parent=pools)
+    pool1 = d.node("Pool: ETH / USDC", GENERIC["box_orange"], 40, 60, 260, 70, parent=pools)
+    pool2 = d.node("Pool: USDC / DAI", GENERIC["box_orange"], 40, 180, 260, 70, parent=pools)
 
     lp = d.node("流動性提供者\n(LP)", GENERIC["box_gray"], 560, 420, 160, 70)
     factory = d.node("Factory Contract\n(新規プール作成)", GENERIC["box_purple"], 1140, 90, 180, 70)
@@ -909,7 +912,7 @@ def build_defi_lending_protocol() -> Diagram:
     lender = d.node("Lender", AWS["user"], 40, 150, 60, 70)
     borrower = d.node("Borrower", AWS["user"], 40, 380, 60, 70)
     pool = d.node("Lending Pool Contract\n(金利モデル, aToken/cToken発行)", GENERIC["box_orange"], 280, 220, 220, 120)
-    collateral = d.node("担保資産\n(Collateral)", GENERIC["box_gray"], 280, 400, 160, 70)
+    collateral = d.node("ETH\n(担保資産の例)", w3.token("ETH"), 300, 400, 60, 60)
     oracle = d.node("Price Oracle", GENERIC["box_purple"], 560, 150, 160, 70)
     healthbot = d.node("Liquidation Bot\n(Health Factor監視)", GENERIC["box_orange"], 560, 400, 200, 70)
     liquidator = d.node("Liquidator\n(清算実行者)", GENERIC["box_green"], 820, 400, 160, 70)
@@ -958,7 +961,7 @@ def build_perpetuals_dex() -> Diagram:
     d.text("Perpetuals DEX (無期限先物) Architecture", 40, 20, 900, 30)
 
     trader = d.node("Trader", AWS["user"], 40, 220, 60, 70)
-    wallet = d.node("Wallet", GENERIC["wallet"], 180, 210, 70, 90)
+    wallet = d.node("Wallet", w3.wallet("metamask"), 190, 225, 60, 60)
     frontend = d.node("Frontend\n(Trading UI)", GENERIC["box"], 320, 220, 160, 70)
     perp = d.node("Perpetuals Contract\n(ポジション管理)", GENERIC["smart_contract"], 560, 205, 120, 100)
 
@@ -989,9 +992,9 @@ def build_stablecoin() -> Diagram:
     d.text("Collateralized Stablecoin Architecture (CDP型, 例: MakerDAO/DAI)", 40, 20, 900, 30)
 
     user = d.node("User", AWS["user"], 40, 220, 60, 70)
-    wallet = d.node("Wallet", GENERIC["wallet"], 180, 210, 70, 90)
+    wallet = d.node("Wallet", w3.wallet("metamask"), 190, 225, 60, 60)
     vault = d.node("Vault / CDP Contract\n(担保管理)", GENERIC["smart_contract"], 340, 200, 130, 110)
-    stablecoin = d.node("Stablecoin\n(例: DAI)", GENERIC["box_purple"], 620, 80, 160, 70)
+    stablecoin = d.node("DAI", w3.token("DAI"), 650, 100, 60, 60)
     oracle = d.node("Price Oracle", GENERIC["box_purple"], 620, 300, 160, 70)
     liquidation = d.node("Liquidation\n(担保割れ時に清算)", GENERIC["box_orange"], 860, 300, 200, 70)
     psm = d.node("Peg Stability Module\n(USDC等と1:1交換)", GENERIC["box_gray"], 860, 80, 220, 70)

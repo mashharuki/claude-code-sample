@@ -1,11 +1,60 @@
 # ブロックチェーン / AI アイコンガイド
 
 ブロックチェーンとAIの領域は、AWS/GCP/Azureほど網羅的な公式アイコンセットがdraw.ioに
-存在しない。そのため `scripts/dio.py` の `GENERIC` 辞書にある**意味のある色分けをした
-汎用シェイプ**を基本とし、要点となる少数の要素だけ専用アイコンを使う方針にしている。
-これは手を抜いているのではなく、「無理に不正確なロゴを使うより、明確にラベリングされた
-汎用図形の方が誤解がない」という判断による(検索結果には非公式・低品質なアイコンも多く
-混ざるため、質を見極めて採用している)。
+標準搭載されていない。そのため2種類のアイコン源を使い分けている:
+
+1. **`scripts/dio.py` の `GENERIC` 辞書** — 意味のある色分けをした汎用シェイプ。
+   ブランドが存在しない/特定しない概念(「Relayer」「Liquidation Bot」等)に使う。
+2. **`scripts/web3icons.py`** — 実在するチェーン/トークン/ウォレットのブランドアイコン
+   (下記)。「これは具体的にEthereumである」「これはUSDCである」等、実物を指す場合に使う。
+
+無理に不正確なロゴを使うより、対応するアイコンがなければ明確にラベリングされた汎用図形の
+方が誤解がない、という考え方は変わらない。search_shapesの結果には非公式・低品質なアイコンも
+多く混ざるため、質を見極めて採用すること。
+
+## ブランドアイコン(`scripts/web3icons.py`)
+
+[web3icons](https://github.com/0xa3k5/web3icons)(MITライセンス、Copyright (c) 2024
+0xa3k5)から、47個のアイコンを `assets/web3icons/` に取り込み済み(帰属表示は
+`assets/web3icons/ATTRIBUTION.md` を参照)。data URI(SVGをURLパーセントエンコードした
+埋め込み画像)としてスタイル文字列に直接埋め込むため、生成した.drawioファイルは
+ネットワーク接続なしで開いても正しく表示される。
+
+```python
+import web3icons as w3
+
+d.node("Ethereum", w3.network("ethereum"), x, y, 50, 50)
+d.node("USDC", w3.token("USDC"), x, y, 60, 60)
+d.node("MetaMask", w3.wallet("metamask"), x, y, 60, 60)
+d.node("Uniswap", w3.exchange("uniswap"), x, y, 60, 60)  # 使用制限は下記参照
+```
+
+利用可能な一覧は `web3icons.AVAILABLE` を参照。収録範囲外のアイコンが必要な場合は、
+`https://github.com/0xa3k5/web3icons/tree/main/raw-svgs/<category>/branded` から該当SVGを
+`assets/web3icons/<category>/` に追加するだけで(コード変更不要)使えるようになる。
+
+**画像をスタイル文字列に埋め込むときの注意(実際にハマった点)**: mxGraphのスタイル文字列は
+`key=value;` のフラットなセミコロン区切りリストなので、値の中に生の `;` が入っていると
+そこでパースが区切られてしまう。標準的な `data:image/svg+xml;base64,...` 形式の`;base64,`
+部分がまさにこれで、**base64のdata URIをそのまま埋め込むと画像が無言で表示されない**
+(実際に描画確認するまで気づかなかった)。`web3icons.py` は代わりにSVG本文全体を
+`urllib.parse.quote()` でパーセントエンコードした `data:image/svg+xml,<encoded>` 形式を使い、
+これで実機確認済み。自分で画像付きスタイルを組み立てる場合もこの形式に倣うこと。
+
+### 使用上の判断基準(重要)
+
+- **チェーン/トークン/ウォレットのロゴ**(`network()`/`token()`/`wallet()`)は
+  「これは実際にEthereumである」「これは実際にUSDCである」という**指示的(denotative)な
+  使い方**なので、汎用パターンのテンプレートに使って問題ない。実際、
+  `cross-chain-bridge.drawio`(Ethereum⇔Base)、`dex-amm.drawio`(ETH/USDC等のペア)、
+  `stablecoin.drawio`(DAI)、`defi-lending-protocol.drawio`(担保資産の例としてETH)、
+  `dapp-fullstack.drawio`/`x402-agentic-payments.drawio`/`perpetuals-dex.drawio`
+  (ウォレット=MetaMask)で採用済み。
+- **取引所/プロトコルのロゴ**(`exchange()`、例: Uniswap, Binance)は**特定の実在企業**を
+  指すため、`dex-amm.drawio` や `cex-architecture.drawio` のような「汎用パターン」の
+  テンプレートには使わない — 使うと「これがUniswap/Binanceの実際の内部構成である」と
+  誤解を与えかねない。ユーザーが明示的に「Uniswapの構成図が欲しい」等、特定のプロトコルに
+  ついての図を求めたときにだけ使う。
 
 ## 検証済みの専用アイコン
 
