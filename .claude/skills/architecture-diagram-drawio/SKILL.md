@@ -8,14 +8,20 @@ description: >
   「マルチテナントの設計を図にして」「NFTマーケットプレイスの構成図」「DEX/CEXのアーキテクチャ」
   「Liquid Stakingの構成図」「ステーブルコインの仕組みを図示して」「Perpetuals DEXの図」
   「トークンローンチパッドの構成」「予測市場(Polymarket的な)の仕組みを図にして」
-  「RWAトークン化の構成図」など、システムの構造・データフロー・ネットワーク構成を視覚化したい
-  という要望が出たら必ず使うこと。ゼロから描く場合も、既存コード(CDK/Terraform等)から起こす
-  場合も、汎用パターンから始めたい場合も対象。36種類の実務パターン(3層Web、サーバーレス、
-  マイクロサービス、マルチリージョンDR、バックアップリカバリ、ゼロトラスト認証、
-  マルチテナントSaaS、dApp、L1ノード、クロスチェーンブリッジ、NFTマーケットプレイス、x402決済、
-  DEX、CEX、DAOガバナンス、DeFiレンディング、Liquid Staking、Perpetuals DEX、ステーブルコイン、
-  トークンローンチパッド、予測市場、RWAトークン化、RAG、マルチエージェント等)の検証済み
-  テンプレートと、公式サービスアイコンを検索して正確に使う手順を提供する。
+  「RWAトークン化の構成図」「静的サイトのホスティング構成」「WebSocketでリアルタイム通信の図」
+  「IoTデータ収集基盤の図」「マルチアカウント統治(Landing Zone)の構成図」
+  「CQRS/Event Sourcingの図」「Sagaパターンを図にして」「Circuit Breakerの構成図」
+  「Strangler Figでの移行計画を図示して」「BFFのアーキテクチャ」など、システムの構造・
+  データフロー・ネットワーク構成を視覚化したいという要望が出たら必ず使うこと。ゼロから描く
+  場合も、既存コード(CDK/Terraform等)から起こす場合も、汎用パターンから始めたい場合も対象。
+  49種類の実務パターン(3層Web、サーバーレス、マイクロサービス、マルチリージョンDR、
+  バックアップリカバリ、ゼロトラスト認証、マルチテナントSaaS、静的サイト、WebSocket、
+  メディア処理、全文検索、IoT、Landing Zone、キャッシュ、Warm Standby、dApp、L1ノード、
+  クロスチェーンブリッジ、NFTマーケットプレイス、x402決済、DEX、CEX、DAOガバナンス、
+  DeFiレンディング、Liquid Staking、Perpetuals DEX、ステーブルコイン、トークンローンチパッド、
+  予測市場、RWAトークン化、RAG、マルチエージェント、CQRS/Event Sourcing、Saga、
+  Circuit Breaker/Bulkhead、Strangler Fig、BFF等)の検証済みテンプレートと、公式サービス
+  アイコンを検索して正確に使う手順を提供する。
 model: opus
 ---
 
@@ -104,10 +110,12 @@ draw.io 形式(.drawio / mxGraph XML)で作成する。
 
 ## テンプレート一覧(概要 — 詳細は references/pattern-catalog.md)
 
-`templates/aws/`(12種): 3層Web(Multi-AZ)、サーバーレスAPI、マイクロサービス(コンテナ)、
+`templates/aws/`(20種): 3層Web(Multi-AZ)、サーバーレスAPI、マイクロサービス(コンテナ)、
 データレイク分析基盤、マルチリージョンActive-Active、Pilot Light/バックアップDR、
 Hub-and-Spokeネットワーク、CI/CDパイプライン、マルチテナントSaaS(Pool/Silo各1)、
-ゼロトラスト認証、エッジセキュリティ(WAF/CDN)。
+ゼロトラスト認証、エッジセキュリティ(WAF/CDN)、静的サイト/JAMstack、WebSocketチャット、
+メディア処理パイプライン、全文検索基盤(OpenSearch)、IoT取り込みパイプライン、
+Landing Zone/マルチアカウント統治、キャッシュ層(Cache-Aside)、Warm Standby DR。
 
 `templates/blockchain/`(18種): dAppフルスタック、L1ノード/バリデータ、クロスチェーンブリッジ、
 オラクル連携、MPCウォレット/カストディ、Rollup/L2、NFTマーケットプレイス、
@@ -118,6 +126,9 @@ RWAトークン化(ERC-3643)。
 
 `templates/ai/`(6種): RAGパイプライン、マルチエージェントオーケストレーション、
 LLM推論ゲートウェイ、MCPサーバー、ベクトルDB、ファインチューニングパイプライン。
+
+`templates/patterns/`(5種、クラウド非依存の汎用設計パターン): CQRS/Event Sourcing、
+Sagaパターン、Circuit Breaker/Bulkhead、Strangler Fig移行、BFF(Backend for Frontend)。
 
 ## GCP / Azure での作成について
 

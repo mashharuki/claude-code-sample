@@ -26,10 +26,12 @@ draw.io のシェイプ名はAWSのサービス改廃やアイコンセット更
 `ec2` `lambda` `ecs_fargate` `eks` `ecr` `s3` `ebs` `backup` `rds` `dynamodb` `aurora`
 `alb` `nlb` `route53` `cloudfront` `global_accelerator` `transit_gateway` `nat_gateway`
 `direct_connect` `vpn_gateway` `internet_gateway` `vpc_endpoint` `opensearch` `glue`
-`athena` `kinesis` `redshift` `eventbridge` `sqs` `sns` `api_gateway` `waf` `shield`
-`guardduty` `cognito` `secrets_manager` `kms` `iam_role` `cloudwatch` `systems_manager`
-`organizations_account` `codepipeline` `codebuild` `bedrock` `bedrock_agentcore`
-`sagemaker` `managed_blockchain` `user` `internet` `step_functions`
+`athena` `kinesis` `kinesis_data_analytics` `redshift` `quicksight` `eventbridge` `sqs`
+`sns` `api_gateway` `waf` `shield` `guardduty` `cognito` `secrets_manager` `kms`
+`iam_role` `cloudwatch` `systems_manager` `organizations_account` `organizational_unit`
+`control_tower` `cloudtrail` `config` `codepipeline` `codebuild` `bedrock`
+`bedrock_agentcore` `sagemaker` `managed_blockchain` `mediaconvert` `iot_core`
+`elasticache_redis` `user` `internet` `step_functions`
 
 これらは全て 78x78px(actor/internetのみ 60x70, 60x60)の `mxgraph.aws4.resourceIcon` 系
 スタイルで統一している。図の中で意図的にサイズを変える理由がなければ、このサイズのまま使う

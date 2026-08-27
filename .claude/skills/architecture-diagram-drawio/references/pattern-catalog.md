@@ -22,6 +22,14 @@
 | `multi-tenant-saas-silo-model.drawio` | テナントごとに完全分離(Siloモデル) | テナント別ALB/ECS/RDS/S3/KMS | 「テナントを完全に分離したい」「エンタープライズ向けSaaS」 |
 | `zero-trust-identity-auth.drawio` | ゼロトラストな認証・認可フロー | Cognito, Lambda Authorizer, WAF, GuardDuty, Secrets Manager | 「認証基盤」「ゼロトラスト」「OIDC/SAML構成」 |
 | `waf-cdn-edge-security.drawio` | エッジでの防御(CDN+WAF+Shield) | CloudFront, WAF, Shield, GuardDuty | 「セキュリティ構成」「DDoS対策」「エッジ保護」 |
+| `static-site-jamstack.drawio` | 静的サイト/SPAホスティング(JAMstack) | S3, CloudFront(+Lambda@Edge), Route 53, API Gateway+Lambda(動的API) | 「静的サイト」「SPA」「JAMstack構成」 |
+| `realtime-websocket-chat.drawio` | リアルタイム双方向通信(チャット等) | API Gateway WebSocket API, Lambda($connect/$default), DynamoDB(Connections) | 「WebSocket」「チャット」「リアルタイム通知」 |
+| `media-processing-pipeline.drawio` | 動画/音声のアップロード〜配信 | S3, MediaConvert, EventBridge, CloudFront | 「動画配信」「トランスコード」「メディア処理」 |
+| `search-platform-opensearch.drawio` | 全文検索基盤 | Glue ETL, OpenSearch, API Gateway+Lambda(検索API) | 「検索機能」「全文検索」「OpenSearch」 |
+| `iot-ingestion-pipeline.drawio` | IoTデバイスからのデータ収集基盤 | IoT Core, Kinesis Data Streams/Analytics, S3, DynamoDB, QuickSight | 「IoT」「デバイスデータ収集」「センサーデータ基盤」 |
+| `landing-zone-multi-account.drawio` | マルチアカウント統治基盤 | Control Tower, Organizations(OU), Log Archive/Audit Account, IAM Identity Center | 「マルチアカウント」「Landing Zone」「アカウント統治」「ガバナンス」 |
+| `caching-layer-cache-aside.drawio` | Cache-Asideキャッシュパターン | ElastiCache(Redis), RDS | 「キャッシュ」「Redis」「読み取り高速化」 |
+| `warm-standby-dr.drawio` | 縮小構成で常時稼働するDR(Pilot LightとActive-Activeの中間) | ALB/EC2/RDSを両リージョンに配置、DR側は最小構成で稼働 | 「Warm Standby」「中間レベルのDR」 |
 
 ## ブロックチェーン (`templates/blockchain/`)
 
@@ -62,6 +70,20 @@ ERC-3643/T-REX)の公開アーキテクチャ資料を調査した上で作成�
 | `mcp-server-architecture.drawio` | MCPサーバーの内部構成 | MCP Client, Tools/Resources/Prompts, 認証 |
 | `vector-db-architecture.drawio` | ベクトルDBの内部構成 | ANNインデックス, メタデータフィルタ, シャーディング |
 | `fine-tuning-pipeline.drawio` | モデルのファインチューニング工程 | データ前処理, GPU Cluster, 評価, モデルレジストリ |
+
+## クラウド非依存の汎用設計パターン (`templates/patterns/`)
+
+AWS/GCP/Azureのどれにも縛られない、分散システムの設計パターン。特定のクラウドサービスに
+依存しないため、`GENERIC`の汎用シェイプで構成している。実装時にどのクラウド/フレームワークを
+使っても、このレイアウトのまま流用できる。
+
+| ファイル | 何を示す図か | 主な要素 |
+|---|---|---|
+| `cqrs-event-sourcing.drawio` | CQRS + Event Sourcing | Command Handler, Event Store(Append-Only), Projector, Read Model |
+| `saga-pattern.drawio` | Sagaパターン(オーケストレーション方式の分散トランザクション) | Saga Orchestrator, 各サービス, 補償トランザクション |
+| `circuit-breaker-bulkhead.drawio` | Circuit Breaker + Bulkhead(耐障害性パターン) | Circuit Breaker(状態遷移), Bulkhead(プール分離), Fallback |
+| `strangler-fig-migration.drawio` | Strangler Fig(レガシー移行パターン) | Facade/Router, Legacy Monolith, 新Microservices |
+| `backend-for-frontend.drawio` | BFF(Backend for Frontend) | Web/Mobile/Partner向けBFF, 共有バックエンドサービス群 |
 
 ## 選び方のヒント
 
