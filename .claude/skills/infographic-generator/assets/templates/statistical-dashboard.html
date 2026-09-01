@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+  STATISTICAL / DATA-DRIVEN infographic — 16:9 (1600x900)
+  Structure: header -> hero stat -> supporting stat grid -> one optional chart -> source footer
+  Replace all placeholder content. Keep every number verbatim from the source.
+  Palette below is set #1 (business). Swap the 3 vars for another set from references/color-palettes.md.
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>インフォグラフィック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1B3A5C;
+    --accent:#E8703A;
+    --neutral:#8CA0B3;
+    --page:#FCFCFA;
+    --ink:#16202B;
+    --card:#FFFFFF;
+    --card-tint:#F3F5F8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1600px;height:900px}
+  body{
+    background:var(--page);color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+    line-height:1.8;letter-spacing:.02em;
+    padding:64px 72px 0;display:flex;flex-direction:column;
+  }
+  .num{font-family:"Inter","Noto Sans JP",sans-serif;font-feature-settings:"tnum";font-weight:700;line-height:1}
+  h1{font-family:"Zen Kaku Gothic New",sans-serif;font-size:54px;line-height:1.3;color:var(--primary)}
+  .dek{font-size:22px;color:var(--neutral);margin-top:10px}
+
+  .hero{display:flex;align-items:baseline;gap:28px;margin:44px 0 40px}
+  .hero .num{font-size:150px;color:var(--accent)}
+  .hero-label{font-size:26px;font-weight:500}
+  .hero-context{font-size:16px;color:var(--neutral);margin-top:6px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;flex:1}
+  .card{background:var(--card);border-top:4px solid var(--primary);border-radius:10px;padding:28px 30px}
+  .card.accent{border-top-color:var(--accent)}
+  .card .num{font-size:52px;color:var(--primary)}
+  .card.accent .num{color:var(--accent)}
+  .card-label{font-size:17px;font-weight:500;margin-top:8px}
+  .card-sub{font-size:14px;color:var(--neutral);margin-top:4px}
+
+  /* simple inline bar chart — widths are value/axisMax * 100% */
+  .chart{background:var(--card-tint);border-radius:10px;padding:26px 30px;grid-column:span 3}
+  .chart h2{font-family:"Zen Kaku Gothic New",sans-serif;font-size:20px;color:var(--primary);margin-bottom:16px}
+  .bar-row{display:flex;align-items:center;gap:16px;margin:10px 0}
+  .bar-name{width:150px;font-size:15px;text-align:right;color:var(--ink)}
+  .bar-track{flex:1;background:#E4E9EF;border-radius:4px;height:22px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--primary);border-radius:4px}
+  .bar-fill.accent{background:var(--accent)}
+  .bar-val{width:56px;font-size:15px}
+
+  footer{padding:22px 0;font-size:12px;color:var(--neutral)}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>見出し：1行で言い切るメッセージ</h1>
+    <p class="dek">補足の一文（対象・期間・出典の要約）</p>
+  </header>
+
+  <div class="hero">
+    <span class="num">73%</span>
+    <div>
+      <div class="hero-label">最重要の数字を一つだけ</div>
+      <div class="hero-context">2023 → 2024、国内ECの成長率</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">2.4<span style="font-size:24px">兆円</span></div>
+      <div class="card-label">市場規模</div>
+      <div class="card-sub">2024年 推計</div>
+    </div>
+    <div class="card">
+      <div class="num">1,850万</div>
+      <div class="card-label">アクティブ利用者</div>
+      <div class="card-sub">前年比 +12%</div>
+    </div>
+    <div class="card accent">
+      <div class="num">4.1<span style="font-size:24px">回</span></div>
+      <div class="card-label">月間平均購入回数</div>
+      <div class="card-sub">重点指標</div>
+    </div>
+
+    <div class="chart">
+      <h2>カテゴリ別構成比</h2>
+      <div class="bar-row">
+        <div class="bar-name">日用品</div>
+        <div class="bar-track"><div class="bar-fill" style="width:42%"></div></div>
+        <div class="bar-val num">42%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">アパレル</div>
+        <div class="bar-track"><div class="bar-fill" style="width:28%"></div></div>
+        <div class="bar-val num">28%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">家電</div>
+        <div class="bar-track"><div class="bar-fill accent" style="width:19%"></div></div>
+        <div class="bar-val num">19%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">その他</div>
+        <div class="bar-track"><div class="bar-fill" style="width:11%"></div></div>
+        <div class="bar-val num">11%</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>出典：〇〇レポート 2024 / 作成：2026-09-01</footer>
+
+</body>
+</html>

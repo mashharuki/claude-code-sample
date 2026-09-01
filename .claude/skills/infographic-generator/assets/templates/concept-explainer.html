@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+  CONCEPT / EXPLAINER infographic — 16:9 (1600x900)
+  This template shows a HUB-AND-SPOKE layout in inline SVG: central concept + 4-6 satellites.
+  Alternatives (swap the SVG block): layered bands, annotated diagram, cycle. See references/infographic-types.md §5.
+  Keep leader lines non-crossing. Central visual must not out-detail the labels.
+  Palette = set #2 (tech). Swap vars from references/color-palettes.md.
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>インフォグラフィック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=M+PLUS+1p:wght@800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#2A2D7C;--accent:#12B8A6;--neutral:#9AA0B4;
+    --page:#FBFBFD;--ink:#1A1B2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1600px;height:900px}
+  body{background:var(--page);color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+    line-height:1.7;letter-spacing:.02em;padding:60px 72px 0;display:flex;flex-direction:column}
+  h1{font-family:"M PLUS 1p",sans-serif;font-weight:800;font-size:50px;line-height:1.3;color:var(--primary)}
+  .dek{font-size:21px;color:var(--neutral);margin-top:8px}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center}
+  svg{width:1360px;height:620px}
+  .hub{fill:var(--primary)}
+  .hub-text{fill:#fff;font-family:"M PLUS 1p",sans-serif;font-weight:800;font-size:26px;text-anchor:middle}
+  .spoke{fill:#fff;stroke:var(--neutral);stroke-width:2}
+  .spoke.key{stroke:var(--accent);stroke-width:3}
+  .spoke-title{fill:var(--primary);font-weight:700;font-size:18px;text-anchor:middle}
+  .spoke-desc{fill:var(--ink);font-size:14px;text-anchor:middle}
+  .link{stroke:var(--neutral);stroke-width:2}
+  footer{padding:18px 0;font-size:12px;color:var(--neutral)}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>概念の見出し：これは何か / どう関係するか</h1>
+    <p class="dek">補足の一文</p>
+  </header>
+
+  <div class="stage">
+    <svg viewBox="0 0 1360 620">
+      <!-- links (drawn first, behind nodes) -->
+      <line class="link" x1="680" y1="310" x2="300" y2="120"/>
+      <line class="link" x1="680" y1="310" x2="1060" y2="120"/>
+      <line class="link" x1="680" y1="310" x2="220" y2="440"/>
+      <line class="link" x1="680" y1="310" x2="1140" y2="440"/>
+      <line class="link" x1="680" y1="310" x2="680" y2="540"/>
+
+      <!-- hub -->
+      <circle class="hub" cx="680" cy="310" r="96"/>
+      <text class="hub-text" x="680" y="304">中心概念</text>
+      <text class="hub-text" x="680" y="336" style="font-size:16px;font-weight:400;fill:#cfd3f0">core idea</text>
+
+      <!-- spokes: each = rounded rect + title + one-line desc -->
+      <g>
+        <rect class="spoke" x="150" y="60" width="300" height="110" rx="12"/>
+        <text class="spoke-title" x="300" y="100">要素 1</text>
+        <text class="spoke-desc" x="300" y="128">一行の説明</text>
+      </g>
+      <g>
+        <rect class="spoke key" x="910" y="60" width="300" height="110" rx="12"/>
+        <text class="spoke-title" x="1060" y="100">要素 2（要所）</text>
+        <text class="spoke-desc" x="1060" y="128">一行の説明</text>
+      </g>
+      <g>
+        <rect class="spoke" x="70" y="385" width="300" height="110" rx="12"/>
+        <text class="spoke-title" x="220" y="425">要素 3</text>
+        <text class="spoke-desc" x="220" y="453">一行の説明</text>
+      </g>
+      <g>
+        <rect class="spoke" x="990" y="385" width="300" height="110" rx="12"/>
+        <text class="spoke-title" x="1140" y="425">要素 4</text>
+        <text class="spoke-desc" x="1140" y="453">一行の説明</text>
+      </g>
+      <g>
+        <rect class="spoke" x="530" y="510" width="300" height="90" rx="12"/>
+        <text class="spoke-title" x="680" y="548">要素 5</text>
+        <text class="spoke-desc" x="680" y="574">一行の説明</text>
+      </g>
+    </svg>
+  </div>
+
+  <footer>出典：〇〇 / 作成：2026-09-01</footer>
+
+</body>
+</html>

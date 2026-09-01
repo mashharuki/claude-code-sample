@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+  COMPARISON infographic — 16:9 (1600x900)
+  Structure: header -> 2 (or 3) equal colour-coded columns -> aligned criteria rows -> verdict strip -> footer
+  Columns MUST be equal width, equal row count, equal detail. Don't stack the deck.
+  Palette = set #1 (business). Swap vars from references/color-palettes.md.
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>インフォグラフィック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700&family=Inter:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1B3A5C;--accent:#E8703A;--neutral:#8CA0B3;
+    --page:#FCFCFA;--ink:#16202B;--card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1600px;height:900px}
+  body{background:var(--page);color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+    line-height:1.7;letter-spacing:.02em;padding:64px 72px 0;display:flex;flex-direction:column}
+  h1{font-family:"Zen Kaku Gothic New",sans-serif;font-size:52px;line-height:1.3;color:var(--primary)}
+  .dek{font-size:21px;color:var(--neutral);margin-top:10px}
+
+  .cols{display:grid;grid-template-columns:220px 1fr 1fr;gap:0;margin:48px 0 32px;flex:1;
+    background:var(--card);border-radius:12px;overflow:hidden}
+  .col-head{padding:22px 24px;font-family:"Zen Kaku Gothic New",sans-serif;font-size:24px;color:#fff}
+  .col-head.a{background:var(--primary)}
+  .col-head.b{background:var(--accent)}
+  .col-head.spacer{background:transparent}
+  .row-label{padding:20px 24px;font-size:16px;font-weight:500;background:#F3F5F8;display:flex;align-items:center}
+  .cell{padding:20px 24px;font-size:16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #EEF1F4}
+  .mark{font-family:"Inter";font-weight:700}
+  .yes{color:var(--primary)}
+  .no{color:var(--neutral)}
+
+  .verdict{background:var(--primary);color:#fff;border-radius:12px;padding:20px 30px;margin-bottom:32px;font-size:18px}
+  .verdict b{color:var(--accent)}
+
+  footer{padding:20px 0;font-size:12px;color:var(--neutral)}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>比較の見出し：A と B のどちらを選ぶか</h1>
+    <p class="dek">補足の一文</p>
+  </header>
+
+  <div class="cols">
+    <div class="col-head spacer"></div>
+    <div class="col-head a">選択肢 A</div>
+    <div class="col-head b">選択肢 B</div>
+
+    <div class="row-label">初期コスト</div>
+    <div class="cell"><span class="mark yes">◯</span> 低い（月額のみ）</div>
+    <div class="cell"><span class="mark no">△</span> 中程度</div>
+
+    <div class="row-label">カスタマイズ性</div>
+    <div class="cell"><span class="mark no">△</span> 限定的</div>
+    <div class="cell"><span class="mark yes">◯</span> 高い</div>
+
+    <div class="row-label">導入スピード</div>
+    <div class="cell"><span class="mark yes">◯</span> 数日</div>
+    <div class="cell"><span class="mark no">✕</span> 数週間</div>
+
+    <div class="row-label">運用負荷</div>
+    <div class="cell"><span class="mark yes">◯</span> 低い</div>
+    <div class="cell"><span class="mark no">△</span> 専任が必要</div>
+  </div>
+
+  <div class="verdict">スモールスタートなら <b>A</b>、要件が固まっていて作り込むなら <b>B</b>。</div>
+
+  <footer>出典：〇〇 / 作成：2026-09-01</footer>
+
+</body>
+</html>

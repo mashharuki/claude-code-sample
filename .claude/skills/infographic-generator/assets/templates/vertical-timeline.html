@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+  TIMELINE infographic — 9:16 portrait (1080x1920). For landscape, rotate the spine to horizontal.
+  Structure: header -> centre spine with alternating left/right entries -> source footer
+  Use up to ~7 entries. Identical date formatting throughout. Equal spacing unless gaps are meaningful.
+  Palette = set #5 (education). Swap vars from references/color-palettes.md.
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>インフォグラフィック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700&family=Inter:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#33488F;--accent:#F2A93B;--neutral:#93A0BE;
+    --page:#FDFCF8;--ink:#1D2444;--card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px}
+  body{background:var(--page);color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+    line-height:1.8;letter-spacing:.02em;padding:72px 64px 0;display:flex;flex-direction:column}
+  .num{font-family:"Inter","Noto Sans JP",sans-serif;font-feature-settings:"tnum";font-weight:700}
+  h1{font-family:"Zen Kaku Gothic New",sans-serif;font-size:56px;line-height:1.3;color:var(--primary);text-align:center}
+  .dek{font-size:22px;color:var(--neutral);margin-top:12px;text-align:center}
+
+  .timeline{position:relative;flex:1;margin:64px 0 40px}
+  .timeline::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--neutral);transform:translateX(-50%)}
+  .entry{position:relative;width:50%;padding:20px 40px;margin-bottom:48px}
+  .entry:nth-child(odd){left:0;text-align:right}
+  .entry:nth-child(even){left:50%}
+  .dot{position:absolute;top:26px;width:20px;height:20px;border-radius:50%;background:var(--primary);border:4px solid var(--page)}
+  .entry:nth-child(odd) .dot{right:-11px}
+  .entry:nth-child(even) .dot{left:-11px}
+  .entry.key .dot{background:var(--accent)}
+  .date{font-size:22px;color:var(--accent);margin-bottom:6px}
+  .entry h2{font-size:24px;font-weight:700;color:var(--primary);margin-bottom:8px}
+  .entry p{font-size:16px}
+
+  footer{padding:24px 0;font-size:13px;color:var(--neutral);text-align:center}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>タイムラインの見出し</h1>
+    <p class="dek">2019 → 2025</p>
+  </header>
+
+  <div class="timeline">
+    <div class="entry">
+      <span class="dot"></span>
+      <div class="date num">2019</div>
+      <h2>出来事の見出し</h2>
+      <p>1〜2行の説明。</p>
+    </div>
+    <div class="entry">
+      <span class="dot"></span>
+      <div class="date num">2021</div>
+      <h2>出来事の見出し</h2>
+      <p>1〜2行の説明。</p>
+    </div>
+    <div class="entry key">
+      <span class="dot"></span>
+      <div class="date num">2023</div>
+      <h2>転機となった出来事</h2>
+      <p>アクセント色で強調する重要エントリ。</p>
+    </div>
+    <div class="entry">
+      <span class="dot"></span>
+      <div class="date num">2025</div>
+      <h2>出来事の見出し</h2>
+      <p>1〜2行の説明。</p>
+    </div>
+  </div>
+
+  <footer>出典：〇〇 / 作成：2026-09-01</footer>
+
+</body>
+</html>
