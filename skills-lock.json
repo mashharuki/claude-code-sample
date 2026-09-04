@@ -5,6 +5,12 @@
       "source": "worldcoin/agentkit",
       "sourceType": "github",
       "computedHash": "679e62180f5f0311c1a7da178bed25c13c49d64a6767915241dc7620640c35bd"
+    },
+    "colosseum-copilot": {
+      "source": "ColosseumOrg/colosseum-copilot",
+      "sourceType": "github",
+      "skillPath": "skills/colosseum-copilot/SKILL.md",
+      "computedHash": "4038e366dd3bbcbc3065abc61c5cc9453b29655f2e5c390a8d3441181d6021b5"
     }
   }
 }
