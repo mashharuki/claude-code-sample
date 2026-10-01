@@ -9,7 +9,52 @@
 
 ## 年別トレンド変遷
 
-### 2025（現在）
+### 2026（最新 — ETHGlobal Tokyo 2026 / ETHOnline 2026 Showcase 実データ調査済み、2026-10 時点）
+**支配的テーマ**: Agentic Commerce インフラ（AI Agent を「決済する経済主体」として扱う）
+
+2026-10 に ETHGlobal Tokyo 2026（全 43 件）・ETHOnline 2026（全 32 件）の
+Showcase を実際に調査した結果、2025 の「AI Agent × Web3」という漠然としたテーマが、
+2026 には以下のように具体化・細分化していることが確認できた。
+
+- **x402（HTTP 402 マイクロペイメント規格）を核心技術に据えた作品が最多**。
+  Agent 同士・Agent と人間の間の支払いを前提にしたプロダクトが突出して多く、
+  単なる決済実行だけでなく「与信審査」「エスクロー留保」「不正請求の検知」
+  「支払いの監査証跡」など決済の**周辺インフラ**まで踏み込んだものが上位に多い。
+  実例: `Dead or Alive Agent`（x402 支払いの事前審査・自動保留）、
+  `Held`（x402 決済をエスクローに留保し買い手確認後に解放）、
+  `FieldProof402`（Agent が人間に x402 で事実検証を依頼し監査可能な領収書を発行）、
+  `Recibo`（x402 Agent 決済のエスクロー＋納品証明）、
+  `Klaxon`（CI シークレットを分割し決済と引き換えでしか使えなくする）。
+- **Agent 向け ID・権限・与信インフラ**: Agent に「財布」「支出上限」
+  「取消可能な権限」「信用・評判スコア」を与える基盤系プロダクトが急増。
+  実例: `Cypher Brain`（ENSv2 スコープの取消可能ウォレット権限）、
+  `Accord`（人間と Agent 双方への支出上限付き予算）、`Agentic World`
+  （Agent のオンチェーン ID）、`Bonded`（Agent の不正請求書払いを防止）、
+  `Agent's List`（Agent 版の口コミ評価）、`Vigil`（Agent の支払能力継続監視）、
+  `Vector52`（人間/Agent 向けオンチェーン・フォレンジック）。
+- **ENS / ENSv2 が人間・Agent 共通の ID レイヤーとして定番化**。単なる
+  ネームサービスでなく「誰が・どの Agent が・どんな権限を持つか」の表現基盤として
+  組み込まれる（`Kakunin`, `Enscribe`, `Floatt`, `Meigi`, `Pact`）。
+- **World ID 等の本人確認が決済・抽選・ガバナンスと組み合わされる**のが定番
+  （`Axis`, `hackpass`, `GomiGo`, `ScalpLess`, `KawaiPay`）。
+- **持続的に強い**: 1inch Aqua / Uniswap v4 Hook を使った DeFi 深堀り
+  （`Iceberg`, `OniBlock`, `nacre`, `Solvent Aqua`, `Orbital Swap`）、
+  Arc / Hedera 上のステーブルコイン決済レール、セキュリティ・不正検知ツール
+  （`Sentinelio`, `Tripwire`, `Ninja Check`, `Secueji`）、
+  ZK を使ったプライバシー・本人確認（`MynaHealth`: 日本の医療資格の ZK 証明、`yuin`）。
+- **要注意**: Agentic Commerce 自体が 2026 時点で最大のレッドオーシャン。
+  「Agent が決済する」だけの作品は多数あり差別化にならない。決済の周辺インフラ
+  （与信・エスクロー・不正防止・監査・紛争解決）まで踏み込むことが
+  ファイナリスト入りの分水嶺になっている。
+
+**注目スポンサー**: x402 系決済インフラ、ENS / ENSv2、World、1inch（Aqua）、
+Uniswap（v4 Hook）、Hedera、Arc / Circle（USDC）、Sui、The Graph
+
+**データソース注記**: Showcase は `?events=<slug>` で絞り込み可能。slug は
+`https://ethglobal.com/events` で確認すること（例: オンラインイベントの slug は
+`ethonline2026` であり `online2026` ではない。推測せず必ず確認する）。
+
+### 2025（旧データ・参考値）
 **支配的テーマ**: AI Agent × Web3
 - LLM（主に Claude / GPT-4o）がオンチェーン操作を自律実行するエージェント
 - Agentic Commerce（Agent 間の自律決済・交渉）

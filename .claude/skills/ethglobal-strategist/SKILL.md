@@ -13,6 +13,7 @@ description: >
   - どのスポンサー賞（prize）を狙うか相談したい
   - ハッカソンのデモ・ピッチ戦略を考えたい
   - 「ハッカソン アイデア」「ブロックチェーン ハッカソン」「Web3 ハッカソン」を含む相談
+model: opus
 ---
 
 # ETH Global Strategist
@@ -45,6 +46,11 @@ WebFetch で以下を取得する：
 https://ethglobal.com/showcase?page=1
 ```
 
+特定イベントに絞り込む場合は `?events=<slug>` クエリが使える（例: `?events=tokyo2026`、
+`?events=ethonline2026`）。slug は `https://ethglobal.com/events` のイベント一覧ページから
+確認できる（例: オンライン開催イベントの slug は `online2026` ではなく `ethonline2026`
+なので、思い込みで推測せず必ず events 一覧で確認すること）。
+
 取得すべき情報：
 - プロジェクト名・説明文
 - 参加ハッカソン名（event）
@@ -53,6 +59,13 @@ https://ethglobal.com/showcase?page=1
 
 **ページネーション**: 1 ページ 32 件。直近 100〜200 件を把握するには数ページ取得する。
 全件（391 ページ以上）は不要 — 直近 3〜5 イベント分に絞ること。
+
+**WebFetch の限界**: Showcase はクライアント側レンダリングのため、WebFetch 1 回では
+ページ内の一部プロジェクトしか抽出できないことがある（要約モデルが件数を絞ることがある）。
+「◯件を確認しました」という注記が出た場合は取りこぼしがある前提で、同じ URL に
+`&page=2` 等を付けて複数回フェッチし突き合わせる。それでも本文が取得できない
+（「No projects found」等 JS 未実行の状態しか返らない）場合は、推測で進めずユーザーに
+該当ページのコピペを依頼する（`development.md` のルール）。
 
 ### 1-2. ETH Global Explorer で補完
 
@@ -79,26 +92,58 @@ https://ethglobal.com/events/{event-slug}
 
 収集データをもとに以下を分析する：
 
-### 直近のメガトレンド（2024-2025 実績）
+### 直近のメガトレンド（2026 実績: ETHGlobal Tokyo 2026 / ETHOnline 2026 ショーケース調査）
 
-**最重要トレンド（必ず言及）：**
-- **AI × Web3**: LLM Agent + スマートコントラクトの融合。自律エージェントが
-  オンチェーン資産を管理・取引する仕組みが最多受賞カテゴリ。
-- **インテント・ベース UX**: ユーザーが「何をしたいか」を自然言語で指示し、
-  バックグラウンドで複雑な DeFi 操作を自動実行する体験設計。
-- **クロスチェーン / インターオペラビリティ**: 複数 L2・チェーン間のシームレスな
-  アセット移動と状態同期。
+2026-10 時点で ETHGlobal Tokyo 2026（全 43 件）・ETHOnline 2026（全 32 件）の
+Showcase データを調査した結果、**2024-2025 の「AI × Web3」という漠然とした
+テーマは、2026 には "AI Agent を経済主体として扱うインフラ" へ一段と具体化している**。
+ファイナリストになるには、以下の最重要トレンドのどれかに**具体的な実装として**
+乗っている必要がある。
+
+**最重要トレンド（必ず言及。ファイナリストの過半数がこの文脈に該当）：**
+- **Agentic Commerce / x402 決済インフラ**: AI Agent が「支払う側」「受け取る側」の
+  両方として経済活動する前提のプロダクトが最多カテゴリ。x402（HTTP 402 ベースの
+  マイクロペイメント規格）を核心技術に据えた受賞・ファイナリスト作品が突出して多い。
+  具体例: `Dead or Alive Agent`（x402 支払いの事前審査・自動保留）、
+  `Held`（x402 決済をエスクローに留保）、`FieldProof402`（Agent が人間に
+  x402 で事実検証を依頼）、`Recibo`（x402 Agent 決済のエスクロー＋監査証跡）、
+  `Vector52`（x402 を使った人間/Agent 向けオンチェーン・フォレンジック）。
+  → 単に「AI Agent を作りました」ではなく、「Agent の支払い・与信・不正防止・
+  監査をどう設計したか」まで踏み込むことが差別化になる。
+- **AI Agent 向け ID・信用・権限インフラ**: Agent に「財布」「予算上限」
+  「取消可能な権限」「評判・信用スコア」「本人確認」を与える基盤系プロダクトが
+  急増。具体例: `Cypher Brain`（ENSv2 スコープの取消可能なウォレット権限）、
+  `Accord`（人間と Agent 双方への支出上限付き予算付与）、`Agentic World`
+  （Agent のオンチェーン ID）、`Bonded`（Agent の不正請求書払いを防止）、
+  `Agent's List`（Agent 版の口コミ評価サービス）、`Vigil`（Agent の支払能力・
+  健全性を継続監視）。
+- **ENS / ENSv2 を人間・Agent 共通の ID レイヤーとして使う**: ENS が単なる
+  ネームサービスを超え、「誰が・どの Agent が・どんな権限を持つか」を
+  表現するアイデンティティ基盤として多数のプロダクトの中核に組み込まれている
+  （`Kakunin`: チームを ENSv2 上で公開、`Enscribe`: ENS 建の請求書、
+  `Floatt`: Agent 支払い企業向け ENS ウォレット）。
+- **人間性・本人確認（World ID 等）× 決済/ガバナンスの組み合わせ**: 「Bot か
+  人間か」を証明した上で決済・抽選・投票を行う設計が定番化
+  （`Axis`: World ID 検証済み人間が AI トレジャリーAgentを承認、
+  `hackpass`: World ID Selfie Check によるイベント本人確認、
+  `GomiGo`: World ID でプライベート資産への物理アクセスを解放、
+  `ScalpLess`: Bot 耐性のある公平な抽選販売）。
 
 **持続的に強いカテゴリ：**
-- DeFi × リアルワールドアセット (RWA)
-- プライバシー（ZK Proof 活用）
-- アカウントアブストラクション (ERC-4337) を使った UX 改善
-- ステーブルコイン・送金プロトコル
+- DeFi の深掘り・カスタム AMM/Hook（Uniswap v4 Hook、1inch Aqua 上の
+  Partial-fill AMM など、既存プロトコルの「核心部分」を拡張する設計）
+- ステーブルコイン・クロスチェーン決済レール（Arc、Hedera 上の USDC 決済等）
+- RWA（Real World Asset）トークン化・担保化
+- セキュリティ / 不正検知ツール（オンチェーン監視、AI によるコントラクト脆弱性診断）
+- プライバシー（ZK Proof による属性証明、医療・本人確認分野での ZK 活用）
 
-**新興カテゴリ：**
-- Agentic Commerce（AI Agent 間の自律取引）
-- Prediction Markets（選挙・スポーツ・天候）
-- オンチェーン Social Graph
+**要注意（もはや「新興」ではなく主流化したため、差別化なしでは埋もれる）：**
+- Agentic Commerce 自体は 2026 時点で最大のレッドオーシャンでもある。
+  「Agent が決済する」だけでは差別化にならず、与信・エスクロー・不正防止・
+  監査証跡・紛争解決など決済の**周辺インフラ**まで踏み込んだプロダクトが
+  ファイナリストに残っている点に注意する。
+- Prediction Markets（オラクルレス 1v1 対戦型など）、ガチャ/抽選の公平性証明
+  （`Takarakuji 2.0`, `Tenjō`）は根強い人気だが過去作との差別化難度が高い。
 
 ### 失敗パターン（避けるべき）
 
@@ -122,23 +167,34 @@ https://ethglobal.com/events/{event-slug}
 **課題領域例**: 金融包摂、本人確認、サプライチェーン、ゲーム、DeSci、ガバナンス  
 **Web3 独自価値例**: 検閲耐性、プログラム可能なお金、グローバル決済、
   トークンインセンティブ、透明性、自己主権  
-**最新技術例**: ZK Proof、AI Agent、Intent, CCIP、ERC-4337、L2 ネイティブ
+**最新技術例（2026）**: x402 マイクロペイメント、ENSv2（Agent/人間 ID）、
+  World ID（Bot 耐性の本人確認）、ZK Proof、AI Agent の与信・権限管理、
+  Intent、ERC-4337、1inch Aqua / Uniswap v4 Hook
 
 ### 3-2. 「賞金マップ」ドリブンのアイデア
 
-スポンサー賞の傾向から逆算してアイデアを出す：
+スポンサー賞の傾向から逆算してアイデアを出す。2026 の Tokyo / Online Showcase では
+以下のスポンサー技術を核心に据えたプロジェクトが特に目立った：
 
-| スポンサー | 典型的な賞の軸 |
-|---|---|
-| Chainlink | CCIP / Data Feeds / Automation 活用 |
-| Uniswap / Aave | DeFi プロトコル深堀り |
-| Polygon / Base / Arbitrum | L2 エコシステム構築 |
-| World / Circle | 本人確認 × ステーブルコイン決済 |
-| The Graph | データインデックス・クエリ |
-| Filecoin / IPFS | 分散ストレージ |
-| Privy / Dynamic | ウォレット UX |
+| スポンサー | 典型的な賞の軸 | 2026 実例 |
+|---|---|---|
+| x402 系（Coinbase / Cloudflare 等） | Agent 間マイクロペイメント、決済の与信・エスクロー・監査証跡 | Held, Recibo, FieldProof402, Dead or Alive Agent |
+| ENS / ENSv2 | Agent・人間共通の ID/権限レイヤーとしての活用 | Cypher Brain, Kakunin, Enscribe, Floatt |
+| World (World ID) | Bot 耐性のある本人確認 × 決済・抽選・ガバナンス | Axis, hackpass, GomiGo, ScalpLess |
+| 1inch（Aqua） | Partial-fill AMM、自己託管型オプション等の DeFi 深堀り | Iceberg, DayTrader, Solvent Aqua, Orbital Swap |
+| Uniswap | v4 Hook によるカスタム AMM ロジック | OniBlock, nacre |
+| Hedera | Agent 向け与信・支払能力監視・GPU/計算資源マーケット | sidereal.hedera, Agentry, Vigil, Freeride |
+| Arc / Circle (USDC) | Agent・企業間のステーブルコイン決済レール | DeFa By InvoiceMate, Orbital Swap |
+| Sui | DeFi 人材マーケット、属性証明付き決済 | SuiDoBashi, KawaiPay |
+| The Graph | データインデックス・Agent の購買判断支援 | Agentry |
+
+**古い知識（Chainlink CCIP / Polygon・Arbitrum の L2 エコシステム構築 / Privy・Dynamic の
+ウォレット UX）も依然として有効な軸だが、2026 の受賞トレンドの中心ではないため
+メイン訴求には据えず、必要に応じて補助的な技術統合として使う。**
 
 最優秀賞を狙う場合: **複数スポンサーの技術を組み合わせて審査員全員に刺さる**構成が有効。
+2026 の傾向としては、特に「x402（決済）× ENS（ID/権限）× World ID（本人確認）」の
+3 点を組み合わせた Agent 向けインフラが審査員に刺さりやすい。
 
 ### 3-3. ユーザーのアイデアブラッシュアップ
 
