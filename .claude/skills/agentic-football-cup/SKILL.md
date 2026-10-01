@@ -32,12 +32,22 @@ model: opus
 - 1チーム=5体のエージェント（**4 outfielders + 1 goalkeeper**）。1選手=1エージェント。
 - **司令塔は存在しない**。5体は毎ティック同じ試合状態を受け取り、それぞれ独立に意思決定する
   （"nobody is the orchestrator. Each agent reads the same game state"）。
-- 意思決定は**2秒ごと**、各エージェントの応答制限は**1秒**。
+- 意思決定は**2秒ごと**、各エージェントの応答制限は**1秒**。**1秒を超えると、そのティックは
+  そのプレイヤーがIDLE扱いになり、リトライは無い**（"Anything slower IDLEs that player for
+  the tick, and there are no retries during a match."）。つまり「賢いが遅いモデル/長いプロンプト」
+  は思考の質以前にこのIDLE化リスクでマイナスになり得る点を、選手プロンプトのレビュー基準5
+  （`references/prompt-templates.md`）で重視する理由になっている。
 - 各ティックの入力: ball position, 全選手の position/velocity, stamina, score, clock。
 - 出力アクション: `MOVE_TO, PASS, SHOOT, DRIBBLE, PRESS_BALL, MARK, INTERCEPT, TACKLE, CLEAR, IDLE`
   + GK専用アクション（名称は未確認 — 要公式確認）。
 - **GK/DF/MF/FWというポジションはエンジンの機能ではなく、system prompt上で与える役割**
   （例: "You are the striker for Team X"）。ポジションらしい振る舞いは全てプロンプトが作る。
+- **フォーメーションはGKのみ固定、残り4人（outfielders）の役割配分はポータルの「Formation」
+  設定でプリセットから選べる**（例: 2-1-1＝GK+2DF+1MF+1FW。左右の矢印で他のプリセットに
+  切り替え可能な様子がユーザーのポータル画面で確認できた）。デプロイ時に既定で入っている
+  GK+DEF+MID+FWD+FWD（運営メール冒頭の例と同じ）は**あくまで初期状態のサンプル**であり、
+  固定要件ではない。ユーザー自身のチーム方針（本スキルなら`football-tactics.md`1節の
+  配分パターン）に合わせて選び直してよい。
 - 戦術の与え方は2層: (1) system prompt = 試合を通じた長期方針、(2) 試合中のリアルタイム
   テキスト指示 = エージェントが**採用するかどうかを自律判断**（従う保証はない）。
 - 出典: [Inside Agentic Football Cup (Strands Agents blog)](https://strandsagents.com/blog/inside-agentic-football-cup/),
@@ -52,13 +62,40 @@ model: opus
   one-clipboard workflow" ＝ AWS側の登録・実行とMinds側のコーチをクリップボード越しに
   行き来する運用）。本スキルとMinds Coachの役割分担は次節を参照。
   出典: [AI Agents Play 5v5 Football In AWS's New League — And Animoca's Minds Is The Coach (EGamers.io)](https://egamers.io/ai-agents-play-5v5-football-in-awss-new-league-and-animocas-minds-is-the-coach/),
+  [Minds by Animoca Brands launches Agentic Football Cup - Virtual League（Animoca公式）](https://www.animocabrands.com/announcement/minds-by-animoca-brands-launches-agentic-football-cup-virtual-league-in-collaboration-with-aws),
   [AWS Agentic Cup - Alpha Season registration](https://aws-x-mind-register.vercel.app/)。
+- 参加者コミュニティのレポート（[Qiita記事](https://qiita.com/ry-harada/items/441725ff1b451ed8042f)）は、
+  試合中のリアルタイム指示が「チームチャットとしてエージェントに渡され、試合セッション中は
+  会話履歴として蓄積される」としており、単発の一言というより**セッション内で積み上がる文脈**
+  として扱われる可能性を示唆している（一次情報未確認、次戦の指示を書く際は蓄積を前提にした
+  一貫性を意識するとよい）。
 
-**この前提のうち、正式なアクション名・スコア判定・タイブレーク・フォーメーションUIの仕様・
-「Wildcard」という名称の公式ボーナス制度の有無・Minds連携の詳細な操作手順は未確認。** 大会・
-シーズン（このサイトは"Alpha Season"と表記）によって変わりうるため、断定せず
+**未確認・情報が食い違っている点（断定しない）**: 正式なアクション名・スコア判定・
+タイブレーク・フォーメーションUIの仕様・「Wildcard」という名称の公式ボーナス制度の有無・
+Minds連携の詳細な操作手順は未確認。また、**応答タイムアウト超過時の挙動について、一次情報
+（Strands Agents blog）は「1秒・超過分はIDLE・リトライ無し」と明記する一方、上記Qiita記事は
+「タイムアウトは5秒で、間に合わないと直前のコマンドが維持される」と異なる数値・挙動を報告して
+いる**。本スキルは一次情報（1秒・IDLE）を採用するが断定はせず、ポータルでの実際のテスト
+試合・練習試合で応答速度とタイムアウト挙動を確認するようユーザーに勧める（基本方針1: 実際の
+挙動を優先）。大会・シーズン（このサイトは"Alpha Season"と表記）によって変わりうるため、断定せず
 [agenticfootballcup.ai](https://agenticfootballcup.ai/) と参加ワークショップ/ポータル/Minds
 Coach自身の最新回答をユーザーに確認してもらうこと。推測でルールを補わない。
+
+**フォーメーションの自由度は解決済み**: 当初、参加者コミュニティのレポート（前述Qiita記事、
+「GKのみ固定・残り4人は自由配分」）と、ユーザーのアカウントで最初に見えたデフォルトの
+GK+DEF+MID+FWD+FWD配分（一見固定に見えた）の間で情報が食い違っていたが、ユーザーの
+ポータル画面で「Formation: 2-1-1」という設定項目と、プリセットを切り替える矢印UIが
+確認できた。**デフォルトのGK+DEF+MID+FWD+FWDは初期サンプルにすぎず、実際には配分を
+選び直せる**——コミュニティのレポート通りで確定。今後は`football-tactics.md`1節の配分
+パターンを前提にプロンプトを設計してよい。
+
+**ポータルの初期デプロイには、まだ埋まっていないテンプレート変数がそのまま残っていた例が
+確認されている**（`{TEAM}`が未置換、`[EXAMPLE]`という接頭辞が優先順位の各行に文字通り残る、
+5人目の役割が`[MF-leaning / DF-leaning]`のように角括弧の選択肢のまま、等）。これは大会側の
+デフォルトのひな形をそのまま残した状態である可能性が高く、モデルに「これは記入例で本指示
+ではない」という誤ったシグナルを送りかねない。選手プロンプトをレビューする際は、こうした
+角括弧・プレースホルダーが実際の値（チーム名・具体的な優先順位）に置き換わっているかを
+必ず確認する（`references/prompt-templates.md`レビュー基準12）。
 
 ## Minds Coach（Animoca Brands）との役割分担
 
